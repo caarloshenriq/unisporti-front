@@ -1,43 +1,84 @@
-export default function Home() {
+const Header = () => {
   return (
-  <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-      <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-          lowbite    
-      </a>
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-              <h1 className="text-xl font-bold leading-tight tracking-tight text-black md:text-2xl">
-                  Sign in to your account
-              </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
-                  <div>
-                      <label className="block mb-2 text-sm font-medium text-black">Your email</label>
-                      <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
-                  </input>
-                  </div>
-                  <div>
-                      <label className="block mb-2 text-sm font-medium text-black">Password</label>
-                      <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required></input>
-                  </div>
-                  <div className="flex items-center justify-between">
-                      <div className="flex items-start">
-                          <div className="flex items-center h-5">
-                            <input id="remember" aria-describedby="remember" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
-                            </input>
-                          </div>
-                          <div className="ml-3 text-sm">
-                            <label className="text-gray-500 dark:text-gray-300">Remember me</label>
-                          </div>
-                      </div>
-                      <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
-                  </div>
-                  <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-                  <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
-                  </p>
-              </form>
-          </div>
+    <header className="bg-uniporraGreen3 text-white py-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Unisporti</h1>
+        <nav>
+          <ul className="flex space-x-6 items-center">
+            <li><a href="#home" className="hover:text-uniporraGreen2">Início</a></li>
+            <li><a href="#about" className="hover:text-uniporraGreen2">Modalidades</a></li>
+            <li><a href="#services" className="hover:text-uniporraGreen2">Sobre</a></li>
+            <li><a href="#contact" className="hover:text-uniporraGreen2">Contato</a></li>
+            <li className="relative">
+              <a href='/login' className="bg-white text-uniporraGreen3 px-4 py-2 rounded-lg hover:bg-uniporraGreen2 hover:text-white transition-all">Entrar</a>
+            </li>
+          </ul>
+        </nav>
       </div>
-  </div>
+    </header>
   );
-}
+};
+
+const HomeSection = () => {
+  return (
+    <section id="home" className="bg-uniporra2 py-20">
+      <div className="container mx-auto text-center">
+        <h2 className="text-4xl font-bold mb-6 text-uniporra">Bem-vindo à Unisport</h2>
+        <p className="text-lg mb-8 text-uniporraBlack">
+          A Unisport é a sua escola de esportes de referência, com professores altamente qualificados 
+          e cursos de alta qualidade. Venha aprimorar suas habilidades esportivas e alcançar seus 
+          objetivos com o melhor em treinamento e suporte.
+        </p>
+        <a href="#services" className="bg-uniporra text-white py-3 px-6 rounded-full hover:bg-uniporraGreen1 transition-all">
+          Ver planos
+        </a>
+      </div>
+    </section>
+  );
+};
+
+const Modality = () => {
+  return (
+    <section id="services" className="py-20 bg-uniporraBlack">
+      <div className="container mx-auto text-center">
+        <h3 className="text-3xl font-bold mb-12 text-uniporra">Nossas Principais Modalidades</h3>
+        <div className="grid md:grid-cols-3 gap-10">
+          {["Futebol", "Basquete", "Natação", "Vôlei", "Artes Marciais"].map((modality) => (
+            <div key={modality} className="bg-white shadow-lg rounded-lg p-8 transition-transform transform hover:scale-105">
+              <h4 className="text-2xl font-bold mb-4 text-uniporra">{modality}</h4>
+              <p className="text-uniporraBlack">Aprimore suas habilidades com nossos treinadores especializados.</p>
+            </div>
+          ))}
+          <div className="bg-white shadow-lg rounded-lg p-8">
+            <h4 className="text-2xl font-bold mb-4 text-uniporra">Conhecer Mais</h4>
+            <p className="text-uniporraBlack">Saiba mais sobre todas as nossas modalidades e encontre a que mais combina com você.</p>
+            <a href="#more" className="mt-4 inline-block bg-uniporra text-white py-2 px-4 rounded-full hover:bg-uniporraGreen1 transition-all">Descubra Mais</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Footer = () => {
+  return (
+    <footer className="bg-uniporraBlack text-white py-6">
+      <div className="container mx-auto text-center">
+        <p>&copy; 2024 Unisporti. Todos os direitos reservados.</p>
+      </div>
+    </footer>
+  );
+};
+
+const LandingPage = () => {
+  return (
+    <div>
+      <Header />
+      <HomeSection />
+      <Modality />
+      <Footer />
+    </div>
+  );
+};
+
+export default LandingPage;
