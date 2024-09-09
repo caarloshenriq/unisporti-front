@@ -1,7 +1,7 @@
 'use client'
 
 import { FC, useState } from 'react';
-import { FaBars, FaCaretDown } from 'react-icons/fa';
+import { FaBars, FaCaretDown, FaCaretUp } from 'react-icons/fa';
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -22,12 +22,16 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen}) => {
           </button>
       <h1 className="text-2xl font-bold">Unisporti</h1>
       <div className="relative">
-        <button
+      <button
           onClick={handleDropdownToggle}
-          className="flex items-center text-white px-4 py-2 rounded-lg focus:outline-none"
+          className="flex items-center text-white px-4 py-2 rounded-lg focus:outline-none transition-colors duration-300"
         >
-          teste
-          <FaCaretDown className="ml-2" />
+          Carlos Santos
+          <div
+            className={`ml-2 transition-transform duration-300 ease-in-out`}
+          >
+            {dropdownOpen ? <FaCaretUp /> : <FaCaretDown />}
+          </div>
         </button>
         {dropdownOpen && (
           <div className="absolute right-0 mt-2 bg-white text-uniporraGreen3 rounded-lg shadow-lg w-48 hover:bg-green-50">

@@ -25,7 +25,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             <a href="/dashboard" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Início</a>
           </li>
           <li>
-            <a href="#modalidades" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Minhas modalidades</a>
+            <a href="/minhas-modalidades" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Minhas modalidades</a>
           </li>
           <li>
             <a href="#sobre" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Sobre</a>

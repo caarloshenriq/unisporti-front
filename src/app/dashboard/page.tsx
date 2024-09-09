@@ -50,19 +50,13 @@ export default function Dashboard() {
           </table>
         </section>
         <section className=" p-4">
-          <h2 className="text-xl font-semibold mb-4">Estatísticas</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-blue-100 p-4 rounded-lg shadow-md hover:bg-blue-200 hover:cursor-pointer">
+          <div className="">
+            <div className="bg-blue-100 p-4 rounded-lg shadow-md hover:bg-blue-200 hover:cursor-pointer text-center">
               <h3 className="text-lg font-semibold mb-2"><FaCalendar className="inline mr-2" /> Próximos Eventos</h3>
               <ul>
                 <li>Evento de futebol - 2024-09-12</li>
                 <li>Campeonato de basquete - 2024-09-18</li>
               </ul>
-            </div>
-            <div className="bg-green-100 p-4 rounded-lg shadow-md hover:bg-green-200 hover:cursor-pointer">
-              <h3 className="text-lg font-semibold mb-2"><FaChartBar className="inline mr-2" /> Desempenho do Aluno</h3>
-              <p>Gráfico de desempenho será exibido aqui.</p>
-              {/* Você pode adicionar um gráfico aqui com uma biblioteca como Chart.js ou Recharts */}
             </div>
           </div>
         </section>
