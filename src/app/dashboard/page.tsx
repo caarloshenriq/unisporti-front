@@ -4,6 +4,7 @@ import Sidebar from "@/components/Sidebar";
 import { useState } from "react";
 import Header from "@/components/Header";
 import { FaBell, FaCalendar, FaChartBar } from "react-icons/fa";
+import Link from "next/link";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -52,11 +53,13 @@ export default function Dashboard() {
         <section className=" p-4">
           <div className="">
             <div className="bg-blue-100 p-4 rounded-lg shadow-md hover:bg-blue-200 hover:cursor-pointer text-center">
+              <Link href="/eventos">
               <h3 className="text-lg font-semibold mb-2"><FaCalendar className="inline mr-2" /> Próximos Eventos</h3>
               <ul>
                 <li>Evento de futebol - 2024-09-12</li>
                 <li>Campeonato de basquete - 2024-09-18</li>
               </ul>
+              </Link>
             </div>
           </div>
         </section>

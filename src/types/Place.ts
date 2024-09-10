@@ -1,4 +1,4 @@
-interface Place{
+export interface Place{
     idPlace: number;
     name: string;
     maxCapacity: number;

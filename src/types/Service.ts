@@ -1,4 +1,4 @@
-interface Service{
+export interface Service{
     idService: number;
     description: string;
     price: number;
