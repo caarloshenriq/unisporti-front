@@ -1,38 +1,45 @@
-'use client';
-import Header from "@/components/Header";
-import Sidebar from "@/components/Sidebar";
-import { useState } from "react";
+'use client'
+import Header from '@/components/Header'
+import Sidebar from '@/components/Sidebar'
+import { useState } from 'react'
 
 export default function Register() {
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("funcionario");
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
+  const [email, setEmail] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [password, setPassword] = useState('')
+  const [role, setRole] = useState('funcionario')
 
   const toggleSidebar = () => {
-    setSidebarOpen(prev => !prev);
-  };
+    setSidebarOpen((prev) => !prev)
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const userData = { email, cpf, password, role };
-    console.log(userData);
-  };
+    e.preventDefault()
+    const userData = { email, cpf, password, role }
+    console.log(userData)
+  }
 
   return (
     <div className="flex">
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className={`flex-1 transition-all duration-300 ease-in-out ${sidebarOpen ? 'ml-64' : 'ml-0'}`}>
+      <div
+        className={`flex-1 transition-all duration-300 ease-in-out ${sidebarOpen ? 'ml-64' : 'ml-0'}`}
+      >
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-        
+
         <div className="flex items-center justify-center h-full">
           <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
-            <h1 className="text-2xl font-semibold text-gray-700 text-center mb-6">Criar Usuário</h1>
-            
+            <h1 className="text-2xl font-semibold text-gray-700 text-center mb-6">
+              Criar Usuário
+            </h1>
+
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-600 text-sm font-medium mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-gray-600 text-sm font-medium mb-2"
+                >
                   Email
                 </label>
                 <input
@@ -47,7 +54,10 @@ export default function Register() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="cpf" className="block text-gray-600 text-sm font-medium mb-2">
+                <label
+                  htmlFor="cpf"
+                  className="block text-gray-600 text-sm font-medium mb-2"
+                >
                   CPF
                 </label>
                 <input
@@ -62,7 +72,10 @@ export default function Register() {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="password" className="block text-gray-600 text-sm font-medium mb-2">
+                <label
+                  htmlFor="password"
+                  className="block text-gray-600 text-sm font-medium mb-2"
+                >
                   Senha
                 </label>
                 <input
@@ -77,7 +90,10 @@ export default function Register() {
               </div>
 
               <div className="mb-6">
-                <label htmlFor="role" className="block text-gray-600 text-sm font-medium mb-2">
+                <label
+                  htmlFor="role"
+                  className="block text-gray-600 text-sm font-medium mb-2"
+                >
                   Cargo
                 </label>
                 <select
@@ -104,5 +120,5 @@ export default function Register() {
         </div>
       </div>
     </div>
-  );
+  )
 }

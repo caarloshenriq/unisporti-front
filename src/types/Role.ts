@@ -1,5 +1,5 @@
-export interface Role{
-    id: number;
-    description: string;
-    active: boolean;
+export interface Role {
+  id: number
+  description: string
+  active: boolean
 }
