@@ -28,13 +28,10 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
             <a href="/minhas-modalidades" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Minhas modalidades</a>
           </li>
           <li>
-            <a href="#sobre" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Sobre</a>
+            <a href="/financeiro" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Financeiro</a>
           </li>
           <li>
-            <a href="#contact" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Contato</a>
-          </li>
-          <li>
-            <a href="/login" className="block bg-white text-uniporraGreen3 py-2 px-4 rounded-lg hover:bg-uniporraGreen2 hover:text-white transition-all">Entrar</a>
+            <a href="/eventos" className="block py-2 px-4 hover:bg-uniporraGreen2 rounded">Eventos</a>
           </li>
         </ul>
       </nav>

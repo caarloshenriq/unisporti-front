@@ -34,7 +34,7 @@ export default function Events() {
         <main className="p-8 h-full overflow-auto">
             <div className="flex flex-row justify-between">
                  <h1 className="text-3xl font-bold mb-6">Eventos</h1>
-                    <button className="hover:bg-slate-300 font-bold py-2 px-4 rounded">
+                    <button className="hover:bg-slate-300 font-bold py-2 px-4 rounded hidden">
                     Novo Evento
                     </button>
             </div>

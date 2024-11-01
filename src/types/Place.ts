@@ -1,6 +1,6 @@
 export interface Place{
-    idPlace: number;
+    id_place?: number;
     name: string;
-    maxCapacity: number;
-    active: boolean;
+    max_capacity: number;
+    active?: boolean;
 }

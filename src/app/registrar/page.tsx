@@ -86,6 +86,7 @@ export default function Register() {
                   onChange={(e) => setRole(e.target.value)}
                   className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
+                  <option value="funcionario">Admin</option>
                   <option value="funcionario">Funcionário</option>
                   <option value="professor">Professor</option>
                   <option value="aluno">Aluno</option>
@@ -94,7 +95,7 @@ export default function Register() {
 
               <button
                 type="submit"
-                className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="w-full bg-uniporra text-white font-semibold py-2 px-4 rounded-lg hover:bg-uniporraGreen1 focus:outline-none focus:ring-2 focus:ring-blue-400"
               >
                 Criar Usuário
               </button>
