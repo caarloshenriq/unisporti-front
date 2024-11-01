@@ -3,7 +3,7 @@
 import Sidebar from '@/components/Sidebar'
 import { useState } from 'react'
 import Header from '@/components/Header'
-import { FaBell, FaCalendar, FaChartBar } from 'react-icons/fa'
+import { FaCalendar } from 'react-icons/fa'
 import Link from 'next/link'
 
 export default function Dashboard() {

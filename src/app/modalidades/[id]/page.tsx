@@ -16,7 +16,8 @@ const mockClasses = [
   { id: 2, name: 'Turma B', schedule: 'Sábado 10:00' },
 ]
 
-export default function ModalityDetail({ params }: { params: { id: string } }) {
+export default function ModalityDetail() {
+  //{ params }: { params: { id: string } }
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
   const [showClasses, setShowClasses] = useState<boolean>(false)
 
