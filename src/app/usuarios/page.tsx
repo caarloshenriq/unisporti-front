@@ -27,7 +27,6 @@ export default function UserList() {
         toast.error('Erro ao carregar os usuários')
       }
     }
-
     fetchUsers()
   }, [])
 

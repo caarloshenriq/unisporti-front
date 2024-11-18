@@ -3,7 +3,7 @@
 import Header from '@/components/Header'
 import Sidebar from '@/components/Sidebar'
 import CustomModal from '@/components/CustomModal'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Place } from '@/types/Place'
 import { api } from '@/services/ApiClient'
 import { useRouter } from 'next/navigation'
@@ -14,7 +14,13 @@ export default function NewPlace() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
   const [places, setPlaces] = useState<Place[]>([])
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
+  const [showEditModal, setShowEditModal] = useState<boolean>(false)
   const [selectedPlace, setSelectedPlace] = useState<Place | null>(null)
+  const [place, setPlace] = useState<Place>({
+    name: '',
+    max_capacity: 0,
+  })
   const router = useRouter()
 
   const toggleSidebar = () => {
@@ -43,6 +49,42 @@ export default function NewPlace() {
       } catch (error) {
         console.error('Erro ao deletar o lugar:', error)
         closeDeleteModal()
+      }
+    }
+  }
+
+  const createPlace = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault()
+      try {
+        console.log(place)
+        await api.post(`/api/secure/admin/place`, place)
+        toast.success('Lugar criado com sucesso!')
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    [place, router]
+  )
+
+  const openEditModal = (place: Place) => {
+    setSelectedPlace(place)
+    setPlace(place) 
+    setShowEditModal(true)
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (selectedPlace) {
+      try {
+        await api.put(`/api/v1/place/${selectedPlace.id_place}`, place)
+        setPlaces(
+          places.map((p) => (p.id_place === selectedPlace.id_place ? { ...p, ...place } : p))
+        )
+        setShowEditModal(false)
+        toast.success('Lugar atualizado com sucesso!')
+      } catch (error) {
+        console.error('Erro ao atualizar o lugar:', error)
       }
     }
   }
@@ -82,7 +124,7 @@ export default function NewPlace() {
                   </th>
                   <th className="py-2 px-4 border-b text-center">
                     <button
-                      onClick={() => router.push(`/lugares/novo`)}
+                      onClick={() => setShowCreateModal(!showCreateModal)}
                       className="bg-uniporraGreen3 text-white px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
                     >
                       Novo
@@ -106,9 +148,7 @@ export default function NewPlace() {
                       <td className="py-3 px-4 border-b text-center">
                         <div className="flex justify-center space-x-4">
                           <span
-                            onClick={() =>
-                              router.push(`/lugares/${place.id_place}`)
-                            }
+                            onClick={() => openEditModal(place)}
                             className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
                             title="Editar"
                           >
@@ -140,17 +180,98 @@ export default function NewPlace() {
           </div>
         </main>
 
-        {/* Modal de Confirmação de Exclusão usando CustomModal */}
+        {/* Modal para deletar */}
         <CustomModal
           isOpen={showDeleteModal}
           onClose={closeDeleteModal}
           onConfirm={confirmDelete}
           title="Confirmar Exclusão"
+          type="delete"
         >
           <p className="text-gray-600">
             Tem certeza que deseja excluir o item{' '}
             <strong>{selectedPlace?.name}</strong>?
           </p>
+        </CustomModal>
+
+        {/* Modal para criar */}
+        <CustomModal
+          isOpen={showCreateModal}
+          onClose={() => setShowCreateModal(false)}
+          onConfirm={() => createPlace}
+          title="Cadastrar Novo Lugar"
+          type="register"
+        >
+          <form className="space-y-4" onSubmit={createPlace}>
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Nome
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={place.name}
+                onChange={(e) => setPlace({ ...place, name: e.target.value })}
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              />
+            </div>
+            <div>
+              <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">
+                Capacidade Máxima
+              </label>
+              <input
+                type="number"
+                id="capacity"
+                value={place.max_capacity}
+                onChange={(e) =>
+                  setPlace({ ...place, max_capacity: parseInt(e.target.value, 10) || 0 })
+                }
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              />
+            </div>
+          </form>
+        </CustomModal>
+
+        {/* Modal para editar */}
+        <CustomModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          onConfirm={() => handleSubmit}
+          title="Editar Lugar"
+          type="update"
+        >
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Nome
+              </label>
+              <input
+                type="text"
+                id="name"
+                value={place.name}
+                onChange={(e) => setPlace({ ...place, name: e.target.value })}
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              />
+            </div>
+            <div>
+              <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">
+                Capacidade Máxima
+              </label>
+              <input
+                type="number"
+                id="capacity"
+                value={place.max_capacity}
+                onChange={(e) =>
+                  setPlace({ ...place, max_capacity: parseInt(e.target.value, 10) || 0 })
+                }
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              />
+            </div>
+          </form>
         </CustomModal>
       </div>
     </div>
