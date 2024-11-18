@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { FaTimes } from 'react-icons/fa'
+import { routes } from './Routes'
 
 interface SidebarProps {
   isOpen: boolean
@@ -7,6 +8,7 @@ interface SidebarProps {
 }
 
 const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
+  const userPermissions = 'admin';
   return (
     <div
       className={`fixed top-0 left-0 h-full bg-uniporraGreen3 text-white w-64 transform ${
@@ -29,30 +31,19 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               Início
             </a>
           </li>
-          <li>
-            <a
-              href="/minhas-modalidades"
-              className="block py-2 px-4 hover:bg-uniporraGreen2 rounded"
-            >
-              Minhas modalidades
-            </a>
-          </li>
-          <li>
-            <a
-              href="/financeiro"
-              className="block py-2 px-4 hover:bg-uniporraGreen2 rounded"
-            >
-              Financeiro
-            </a>
-          </li>
-          <li>
-            <a
-              href="/eventos"
-              className="block py-2 px-4 hover:bg-uniporraGreen2 rounded"
-            >
-              Eventos
-            </a>
-          </li>
+          {routes.map(
+            ({ path, label, permission }) =>
+              userPermissions.includes(permission) && (
+                <li key={path}>
+                  <a
+                    href={path}
+                    className="block py-2 px-4 hover:bg-uniporraGreen2 rounded"
+                  >
+                    {label}
+                  </a>
+                </li>
+              )
+          )}
         </ul>
       </nav>
     </div>

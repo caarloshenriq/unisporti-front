@@ -1,7 +1,7 @@
 'use client'
 
 import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/sidebar'
 import { useCallback, useEffect, useState } from 'react'
 import { Place } from '@/types/Place'
 import { api } from '@/services/ApiClient'

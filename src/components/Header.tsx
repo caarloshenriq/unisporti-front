@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import { FaBars, FaCaretDown, FaCaretUp } from 'react-icons/fa'
 
@@ -10,6 +11,7 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false)
+  const router = useRouter();
 
   const handleDropdownToggle = () => {
     setDropdownOpen((prev) => !prev)
@@ -20,7 +22,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
       <button onClick={toggleSidebar} className="text-white focus:outline-none">
         {!sidebarOpen && <FaBars className="w-6 h-6 ml-4" />}
       </button>
-      <h1 className="text-2xl font-bold">Unisporti</h1>
+      <h1 className="text-2xl font-bold hover:cursor-pointer" onClick={() => router.push('/dashboard')}>Unisporti</h1>
       <div className="relative">
         <button
           onClick={handleDropdownToggle}

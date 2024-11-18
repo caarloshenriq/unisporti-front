@@ -1,6 +1,6 @@
 'use client'
 import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/sidebar'
 import { useState } from 'react'
 
 const mockModalityDetails = {

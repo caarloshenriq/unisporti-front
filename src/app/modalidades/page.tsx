@@ -1,6 +1,6 @@
 'use client'
 import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/sidebar'
 import Link from 'next/link'
 import { useState } from 'react'
 

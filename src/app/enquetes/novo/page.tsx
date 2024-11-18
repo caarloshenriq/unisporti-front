@@ -2,7 +2,7 @@
 'use client'
 
 import Header from '@/components/Header'
-import Sidebar from '@/components/Sidebar'
+import Sidebar from '@/components/sidebar'
 import { Poll } from '@/types/Poll'
 import { Question } from '@/types/Question'
 import { useState, useCallback } from 'react'
