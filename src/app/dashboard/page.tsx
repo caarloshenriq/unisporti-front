@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
-
+  // console.log(localStorage.getItem('token'))
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev)
   }

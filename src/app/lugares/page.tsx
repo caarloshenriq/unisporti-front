@@ -50,7 +50,7 @@ export default function NewPlace() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const response = await api.get('/api/v1/place')
+        const response = await api.get('/api/secure/admin/place')
         const data = response.data
         setPlaces(data)
       } catch (error) {

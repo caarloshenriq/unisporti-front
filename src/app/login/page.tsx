@@ -1,5 +1,6 @@
 'use client'
 
+import { api } from '@/services/ApiClient'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -11,17 +12,11 @@ export default function Login() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    if (!email || !password) {
-      toast.error('Preencha todos os campos')
-      return
-    }
-
-    if (email !== 'teste@gmail.com' || password !== '123456') {
-      toast.error('Credenciais inválidas')
-      return
-    }
+    console.log({cpf: email, password})
+    const response = await api.post('api/auth/login', {cpf: email, password})
+    toast.success('Login realizado com sucesso!')
     router.push('/dashboard')
+    localStorage.setItem('token', response.data.token);
   }
 
   return (
@@ -39,7 +34,7 @@ export default function Login() {
               E-mail
             </label>
             <input
-              type="email"
+              type="text"
               id="username"
               name="username"
               required
