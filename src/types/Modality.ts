@@ -1,9 +1,9 @@
 import { User } from './User'
 
 export interface Modality {
-  idModality: number
-  instructor: User
+  id_modality: number
+  id_instructor: User
   description: string
-  maxParticipants: number
+  max_participants: number
   active: boolean
 }
