@@ -1,5 +1,6 @@
 'use client'
 
+import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import { FaBars, FaCaretDown, FaCaretUp } from 'react-icons/fa'
@@ -17,6 +18,16 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
     setDropdownOpen((prev) => !prev)
   }
 
+  interface JwtPayload {
+    idUser: string;
+    sub: string;
+    // Add other properties if necessary
+  }
+  
+  const decoded: JwtPayload = jwtDecode(localStorage.getItem('token') || '');
+  
+  console.log(decoded)
+
   return (
     <header className="bg-uniporraGreen3 text-white py-4 flex items-center justify-between px-4 relative">
       <button onClick={toggleSidebar} className="text-white focus:outline-none">
@@ -28,7 +39,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
           onClick={handleDropdownToggle}
           className="flex items-center text-white px-4 py-2 rounded-lg focus:outline-none transition-colors duration-300"
         >
-          Carlos Santos
+          {decoded.sub}
           <div className={`ml-2 transition-transform duration-300 ease-in-out`}>
             {dropdownOpen ? <FaCaretUp /> : <FaCaretDown />}
           </div>

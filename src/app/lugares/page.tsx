@@ -3,7 +3,7 @@
 import Header from '@/components/Header'
 import Sidebar from '@/components/sidebar'
 import CustomModal from '@/components/CustomModal'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, FormEvent } from 'react'
 import { Place } from '@/types/Place'
 import { api } from '@/services/ApiClient'
 import { useRouter } from 'next/navigation'
@@ -40,7 +40,7 @@ export default function NewPlace() {
   const confirmDelete = async () => {
     if (selectedPlace) {
       try {
-        await api.delete(`/api/v1/place/${selectedPlace.id_place}`)
+        await api.delete(`/api/secure/admin/place/${selectedPlace.id_place}`)
         setPlaces(
           places.filter((place) => place.id_place !== selectedPlace.id_place)
         )
@@ -54,12 +54,12 @@ export default function NewPlace() {
   }
 
   const createPlace = useCallback(
-    async (e: React.FormEvent) => {
+    async (e: FormEvent) => {
       e.preventDefault()
       try {
-        console.log(place)
         await api.post(`/api/secure/admin/place`, place)
         toast.success('Lugar criado com sucesso!')
+        setShowCreateModal(false)  // Fechar o modal após criação
       } catch (error) {
         console.error(error)
       }
@@ -73,16 +73,16 @@ export default function NewPlace() {
     setShowEditModal(true)
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (selectedPlace) {
       try {
-        await api.put(`/api/v1/place/${selectedPlace.id_place}`, place)
-        setPlaces(
-          places.map((p) => (p.id_place === selectedPlace.id_place ? { ...p, ...place } : p))
-        )
+        console.log(selectedPlace)
+        await api.put(`/api/secure/admin/place`, place)
         setShowEditModal(false)
+        setSelectedPlace(null)
         toast.success('Lugar atualizado com sucesso!')
+        setSelectedPlace(null)
       } catch (error) {
         console.error('Erro ao atualizar o lugar:', error)
       }
@@ -101,7 +101,7 @@ export default function NewPlace() {
     }
 
     fetchPlaces()
-  }, [])
+  }, [places])
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -198,7 +198,7 @@ export default function NewPlace() {
         <CustomModal
           isOpen={showCreateModal}
           onClose={() => setShowCreateModal(false)}
-          onConfirm={() => createPlace}
+          onConfirm={(e: FormEvent) => createPlace(e)}
           title="Cadastrar Novo Lugar"
           type="register"
         >
@@ -210,7 +210,6 @@ export default function NewPlace() {
               <input
                 type="text"
                 id="name"
-                value={place.name}
                 onChange={(e) => setPlace({ ...place, name: e.target.value })}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
@@ -223,7 +222,6 @@ export default function NewPlace() {
               <input
                 type="number"
                 id="capacity"
-                value={place.max_capacity}
                 onChange={(e) =>
                   setPlace({ ...place, max_capacity: parseInt(e.target.value, 10) || 0 })
                 }
@@ -238,7 +236,7 @@ export default function NewPlace() {
         <CustomModal
           isOpen={showEditModal}
           onClose={() => setShowEditModal(false)}
-          onConfirm={() => handleSubmit}
+          onConfirm={(e: FormEvent) => handleSubmit(e)}
           title="Editar Lugar"
           type="update"
         >

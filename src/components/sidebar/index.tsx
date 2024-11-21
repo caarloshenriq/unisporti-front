@@ -26,8 +26,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
           <li>
             <a
               href="/dashboard"
-              className="block py-2 px-4 hover:bg-uniporraGreen2 rounded"
+              className="block py-2 px-4 border-b border-white relative overflow-hidden"
             >
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-white transition-all duration-300 transform hover:w-full"></span>
               Início
             </a>
           </li>
@@ -37,8 +38,9 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                 <li key={path}>
                   <a
                     href={path}
-                    className="block py-2 px-4 hover:bg-uniporraGreen2 rounded"
+                    className="block py-2 px-4 border-b border-white relative overflow-hidden"
                   >
+                    <span className="absolute bottom-0 left-0 w-0 h-px bg-white transition-all duration-300 transform hover:w-full"></span>
                     {label}
                   </a>
                 </li>

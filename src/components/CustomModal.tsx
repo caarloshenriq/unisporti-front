@@ -1,9 +1,9 @@
-import React, { ReactNode } from 'react'
+import React, { FormEvent, ReactNode } from 'react'
 
 interface CustomModalProps {
   isOpen: boolean
   onClose: () => void
-  onConfirm: () => void
+  onConfirm: (e: FormEvent) => Promise<void>; 
   title: string
   children: ReactNode
   type: 'read' | 'register' | 'update' | 'delete'

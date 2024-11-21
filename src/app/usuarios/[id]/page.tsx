@@ -2,32 +2,50 @@
 
 import Header from '@/components/Header'
 import Sidebar from '@/components/sidebar'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { User } from '@/types/User'
 import { api } from '@/services/ApiClient'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import { formatCpf, formatPhone } from '@/utils/Masks'
 
-export default function NewUser() {
+export default function EditUser() {
   const router = useRouter()
+  const { id } = useParams() // Obtenção do ID do usuário a ser editado da URL
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
   const [user, setUser] = useState<User>({
     active: true,
     cpf: '',
     email: '',
-    first_name: '', // Mudou de firstName para first_name
-    last_name: '', // Mudou de lastName para last_name
+    first_name: '',
+    last_name: '',
     phone: '',
     role: '',
-    birth_date: new Date(), // Mudou de birthDate para birth_date
+    birth_date: new Date(),
   })
 
   const [instructorInfo, setInstructorInfo] = useState({
-    education_institution: '',
-    degree_name: '', // Mudou de degreeName para degree_name
-    start_date: '' // Mudou de startDate para start_date
+    institution: '',
+    degree_name: '',
+    start_date: ''
   })
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { data } = await api.get(`/api/secure/admin/user/${id}`)
+        setUser({
+          ...data,
+          birth_date: new Date(data.birth_date),
+        })
+      } catch (error) {
+        console.error(error)
+        toast.error(`Erro ao carregar os dados do usuário`)
+      }
+    }
+
+    fetchUser()
+  }, [id])
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev)
@@ -58,34 +76,26 @@ export default function NewUser() {
     async (e: React.FormEvent) => {
       e.preventDefault()
       try {
-        const cleanCpf = user.cpf.replace(/\D/g, '') 
-        const cleanPhone = user.phone.replace(/\D/g, '') 
-  
-        const userData = { 
+        const cleanCpf = user.cpf.replace(/\D/g, '')
+        const cleanPhone = user.phone.replace(/\D/g, '')
+
+        const userData = {
           ...user,
-          cpf: cleanCpf, 
+          cpf: cleanCpf,
           phone: cleanPhone,
-          password: cleanCpf,
           birthDate: user.birth_date
         }
-        const res = await api.post(`/api/secure/admin/user`, userData)
-        console.log(res.data)
-        if(user.role === 'I') {
-          const instructorData = {
-            ...instructorInfo,
-            id_user: res.data.id_user,
-            active: true
-          }
-          await api.post(`/api/secure/admin/instructor`, instructorData)
-        }
-        toast.success(`Usuário criado com sucesso`)
+
+        await api.put(`/api/secure/admin/user`, userData)
+
+        toast.success(`Usuário atualizado com sucesso`)
         router.push('/usuarios')
       } catch (error) {
         console.error(error)
-        toast.error(`Erro ao criar o usuário`)
+        toast.error(`Erro ao atualizar o usuário`)
       }
     },
-    [user, instructorInfo, router]
+    [user, instructorInfo, router, id]
   )
 
   return (
@@ -97,15 +107,15 @@ export default function NewUser() {
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         <main className="flex justify-center items-center h-full p-4 sm:p-8">
           <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 sm:p-8">
-            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Novo Usuário</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Editar Usuário</h1>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-gray-700">Nome</label>
                   <input
                     type="text"
-                    name="first_name" // Mudou de firstName para first_name
-                    value={user.first_name} // Mudou de firstName para first_name
+                    name="first_name"
+                    value={user.first_name}
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
                     required
@@ -115,8 +125,8 @@ export default function NewUser() {
                   <label className="block text-gray-700">Sobrenome</label>
                   <input
                     type="text"
-                    name="last_name" // Mudou de lastName para last_name
-                    value={user.last_name} // Mudou de lastName para last_name
+                    name="last_name"
+                    value={user.last_name}
                     onChange={handleChange}
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
                     required
@@ -195,51 +205,15 @@ export default function NewUser() {
                   </select>
                 </div>
               </div>
-              
-              {user.role === 'I' && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-gray-700">Instituição de Ensino</label>
-                    <input
-                      type="text"
-                      name="education_institution" // Corrigido para education_institution
-                      value={instructorInfo.education_institution}
-                      onChange={handleInstructorChange}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-700">Nome do Curso</label>
-                    <input
-                      type="text"
-                      name="degree_name" // Mudou de degreeName para degree_name
-                      value={instructorInfo.degree_name} // Mudou de degreeName para degree_name
-                      onChange={handleInstructorChange}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-gray-700">Data de Início</label>
-                    <input
-                      type="date"
-                      name="start_date" // Mudou de startDate para start_date
-                      value={instructorInfo.start_date} // Mudou de startDate para start_date
-                      onChange={handleInstructorChange}
-                      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
-                      required
-                    />
-                  </div>
-                </div>
-              )}
 
-              <button
-                type="submit"
-                className="w-full py-2 px-4 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 focus:outline-none"
-              >
-                Criar Usuário
-              </button>
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 focus:outline-none"
+                >
+                  Atualizar Usuário
+                </button>
+              </div>
             </form>
           </div>
         </main>

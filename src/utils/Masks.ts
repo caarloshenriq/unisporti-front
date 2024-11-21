@@ -15,9 +15,7 @@ export function formatPhone(phone: string): string {
 }
 
 export function formatCurrency(value: string): string {
-  return value
-    .replace(/\D/g, '')
-    .replace(/(\d)(\d{2})$/, '$1,$2')
-    .replace(/(\d)(\d{3}),/, '$1.$2,')
-    .replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  const sanitizedValue = value.replace(/\D/g, '')
+  const numericValue = (parseInt(sanitizedValue) / 100).toFixed(2)
+  return numericValue.replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 }

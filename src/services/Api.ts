@@ -7,9 +7,8 @@ export function setupAPIClient() {
   })
 
   api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token')
+    const token = process.env.NEXT_PUBLIC_TOKEN
     if (token && config.headers) {
-      console.log(token)
       config.headers['Authorization'] = `Bearer ${token}`
     }
     return config

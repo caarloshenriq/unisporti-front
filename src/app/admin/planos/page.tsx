@@ -2,12 +2,13 @@
 import Header from '@/components/Header'
 import Sidebar from '@/components/sidebar'
 import CustomModal from '@/components/CustomModal'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, FormEvent } from 'react'
 import { FiEdit, FiTrash } from 'react-icons/fi'
 import toast from 'react-hot-toast'
 import { Plan } from '@/types/Plan'
 import { api } from '@/services/ApiClient'
 import { formatCurrency } from '@/utils/Masks'
+import { Modality } from '@/types/Modality'
 
 export default function Modalidades() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
@@ -16,10 +17,12 @@ export default function Modalidades() {
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null)
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
   const [showEditModal, setShowEditModal] = useState<boolean>(false)
+  const [modalities, setModalities] = useState<Modality[]>([])
   const [newPlan, setNewPlan] = useState<Plan>({
     name: '',
     price_cents: 0,
     duration_days: 0,
+    id_modality: 0,
     active: true
   })
 
@@ -40,7 +43,7 @@ export default function Modalidades() {
   const confirmDelete = async () => {
     if (selectedPlan) {
       try {
-        await api.delete(`/api/v1/plan/${selectedPlan.id_plan}`)
+        await api.delete(`/api/secure/admin/plan/${selectedPlan.id_plan}`)
         setPlans(plans.filter((plan) => plan.id_plan !== selectedPlan.id_plan))
         closeDeleteModal()
         toast.success('Plano deletado com sucesso!')
@@ -53,7 +56,7 @@ export default function Modalidades() {
 
   const openEditModal = (plan: Plan) => {
     setSelectedPlan(plan)
-    setNewPlan(plan) // Preenche os dados do plano no estado de edição
+    setNewPlan(plan)
     setShowEditModal(true)
   }
 
@@ -66,7 +69,8 @@ export default function Modalidades() {
     e.preventDefault()
     if (selectedPlan) {
       try {
-        await api.put(`/api/v1/plan/${selectedPlan.id_plan}`, newPlan)
+        console.log(selectedPlan)
+        await api.put(`/api/secure/admin/plan`, selectedPlan)
         setPlans(plans.map((plan) => (plan.id_plan === selectedPlan.id_plan ? newPlan : plan)))
         closeEditModal()
         toast.success('Plano editado com sucesso!')
@@ -79,7 +83,7 @@ export default function Modalidades() {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await api.get('/api/v1/plan')
+        const response = await api.get('/api/secure/admin/plan')
         setPlans(response.data)
       } catch (error) {
         console.error('Erro ao buscar os planos:', error)
@@ -87,7 +91,21 @@ export default function Modalidades() {
     }
 
     fetchPlans()
+  }, [plans])
+
+  useEffect(() => {
+    const fetchModality = async () => {
+      try {
+        const modalityResponse = await api.get('/api/secure/admin/modality')
+        setModalities(modalityResponse.data)
+      } catch (error) {
+        console.error('Erro ao buscar os planos:', error)
+      }
+    }
+
+    fetchModality()
   }, [])
+
 
   const createPlan = useCallback(
     async (e: React.FormEvent) => {
@@ -95,8 +113,8 @@ export default function Modalidades() {
       try {
         await api.post(`/api/secure/admin/plan`, newPlan)
         toast.success('Plano criado com sucesso!')
-        setPlans((prevPlans) => [...prevPlans, newPlan]) // Atualiza a lista de planos
-        setShowCreateModal(false) // Fecha o modal após criar o plano
+        setPlans((prevPlans) => [...prevPlans, newPlan])
+        setShowCreateModal(false)
       } catch (error) {
         console.error(error)
       }
@@ -112,7 +130,7 @@ export default function Modalidades() {
       >
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         <main className="p-8 h-full overflow-auto">
-          <h1 className="text-3xl font-bold mb-6 text-center">Modalidades</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">Planos</h1>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-300 rounded-lg">
               <thead>
@@ -192,7 +210,7 @@ export default function Modalidades() {
         <CustomModal
           isOpen={showCreateModal}
           onClose={() => setShowCreateModal(false)}
-          onConfirm={() => createPlan}
+          onConfirm={(e: FormEvent) => createPlan(e)}
           title="Cadastrar Plano"
           type="register"
         >
@@ -209,6 +227,26 @@ export default function Modalidades() {
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
+            </div>
+            <div>
+              <label htmlFor="modality" className="block text-sm font-medium text-gray-700">
+                Modalidade
+              </label>
+              <select
+                id="modality"
+                onChange={(e) =>
+                  setNewPlan({ ...newPlan, id_modality: parseInt(e.target.value, 10) || 0 })
+                }
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              >
+                <option value="">Selecione uma Modalidade</option>
+                {modalities.map((modality) => (
+                  <option key={modality.id_modality} value={modality.id_modality}>
+                    {modality.description}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor="price" className="block text-sm font-medium text-gray-700">
@@ -252,7 +290,7 @@ export default function Modalidades() {
         <CustomModal
           isOpen={showEditModal}
           onClose={closeEditModal}
-          onConfirm={() => editPlan}
+          onConfirm={(e: FormEvent) => editPlan(e)}
           title="Editar Plano"
           type="update"
         >
@@ -269,6 +307,27 @@ export default function Modalidades() {
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
+            </div>
+            <div>
+              <label htmlFor="modality" className="block text-sm font-medium text-gray-700">
+                Modalidade
+              </label>
+              <select
+                id="modality"
+                value={newPlan.id_modality}
+                onChange={(e) =>
+                  setNewPlan({ ...newPlan, id_modality: parseInt(e.target.value, 10) || 0 })
+                }
+                required
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+              >
+                <option value="">Selecione uma Modalidade</option>
+                {modalities.map((modality) => (
+                  <option key={modality.id_modality} value={modality.id_modality}>
+                    {modality.description}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label htmlFor="price" className="block text-sm font-medium text-gray-700">

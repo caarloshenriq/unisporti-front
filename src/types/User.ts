@@ -1,13 +1,13 @@
 import { Role } from './Role'
 
 export interface User {
-  id?: number
+  id_user?: number
   email: string
-  firstName: string
-  lastName: string
+  first_name: string
+  last_name: string
   cpf: string
   phone: string
   role: string
   active: boolean
-  birthDate: Date
+  birth_date: Date
 }
