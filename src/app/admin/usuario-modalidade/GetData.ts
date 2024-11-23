@@ -1,4 +1,3 @@
-// src/hooks/useUserModalityData.ts
 import { useEffect, useMemo, useState } from 'react'
 import { api } from '@/services/ApiClient'
 import { UserPlan } from '@/types/UserPlan'
