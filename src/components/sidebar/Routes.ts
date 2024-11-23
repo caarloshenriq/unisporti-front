@@ -5,12 +5,17 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  { path: '/financeiro', label: 'Financeiro', permission: 'user' },
-  { path: '/lugares', label: 'Lugares', permission: 'admin' },
-  { path: '/enquetes', label: 'Enquetes', permission: 'admin' },
-  { path: '/admin/modalidades', label: 'Modalidades', permission: 'admin' },
-  { path: '/admin/planos', label: 'Planos', permission: 'admin' },
-  { path: '/usuarios', label: 'Usuarios', permission: 'admin' },
-  { path: '/nova-aula', label: 'Nova Aula', permission: 'instructor' },
-  { path: '/minhas-modalidades', label: 'Nova Aula', permission: 'user' },
+  { path: '/financeiro', label: 'Financeiro', permission: 'U' },
+  { path: '/lugares', label: 'Lugares', permission: 'A' },
+  // { path: '/enquetes', label: 'Enquetes', permission: 'admin' },
+  { path: '/admin/modalidades', label: 'Modalidades', permission: 'A' },
+  { path: '/admin/planos', label: 'Planos', permission: 'A' },
+  { path: '/usuarios', label: 'Usuarios', permission: 'A' },
+  { path: '/nova-aula', label: 'Nova Aula', permission: 'I' },
+  { path: '/minhas-modalidades', label: 'Nova Aula', permission: 'U' },
+  {
+    path: '/admin/usuario-modalidade',
+    label: 'Usuario Modalidade',
+    permission: 'A',
+  },
 ]

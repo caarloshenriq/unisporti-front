@@ -6,16 +6,31 @@ import { FormEvent, useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function Login() {
-  const [email, setEmail] = useState('')
+  const [cpf, setCpf] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
 
+  // Função para aplicar a máscara de CPF
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    setCpf(value);
+  }
+
+  // Função para remover a máscara de CPF ao enviar
+  const removeCpfMask = (value: string) => {
+    return value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+  }
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    console.log({cpf: email, password})
-    const response = await api.post('api/auth/login', {cpf: email, password})
-    toast.success('Login realizado com sucesso!')
-    router.push('/dashboard')
+    e.preventDefault();
+    const cpfWithoutMask = removeCpfMask(cpf); // CPF sem máscara
+    console.log({ cpf: cpfWithoutMask, password });
+    const response = await api.post('api/auth/login', { cpf: cpfWithoutMask, password });
+    toast.success('Login realizado com sucesso!');
+    router.push('/dashboard');
     localStorage.setItem('token', response.data.token);
   }
 
@@ -28,18 +43,20 @@ export default function Login() {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="username"
+              htmlFor="cpf"
               className="block text-sm font-medium text-gray-700"
             >
-              E-mail
+              CPF
             </label>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="cpf"
+              name="cpf"
               required
+              maxLength={14}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm"
-              onChange={(e) => setEmail(e.target.value)}
+              value={cpf}
+              onChange={handleCpfChange}
             />
           </div>
           <div className="mb-6">

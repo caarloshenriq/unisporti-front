@@ -1,6 +1,6 @@
 'use client'
 
-import { jwtDecode } from 'jwt-decode'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import { FaBars, FaCaretDown, FaCaretUp } from 'react-icons/fa'
@@ -18,15 +18,8 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
     setDropdownOpen((prev) => !prev)
   }
 
-  interface JwtPayload {
-    idUser: string;
-    sub: string;
-    // Add other properties if necessary
-  }
   
   const decoded: JwtPayload = jwtDecode(localStorage.getItem('token') || '');
-  
-  console.log(decoded)
 
   return (
     <header className="bg-uniporraGreen3 text-white py-4 flex items-center justify-between px-4 relative">
@@ -48,7 +41,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
           <div className="absolute right-0 mt-2 bg-white text-uniporraGreen3 rounded-lg shadow-lg w-48 hover:bg-green-50">
             <button
               onClick={() => {
-                alert('oi')
+                router.push('/login')
               }}
               className="block w-full text-left px-4 py-2"
             >

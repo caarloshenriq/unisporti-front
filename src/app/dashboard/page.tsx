@@ -7,7 +7,7 @@ import { FaCalendar } from 'react-icons/fa'
 import Link from 'next/link'
 
 export default function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true)
   // console.log(localStorage.getItem('token'))
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev)
@@ -34,7 +34,7 @@ export default function Dashboard() {
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
       <div className={`${sidebarOpen ? 'ml-64' : ''}`}>
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-        <section className="bg-white p-4">
+        {/* <section className="bg-white p-4">
           <h2 className="text-xl font-semibold mb-4">Avisos</h2>
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-100">
@@ -75,7 +75,7 @@ export default function Dashboard() {
               </Link>
             </div>
           </div>
-        </section>
+        </section> */}
       </div>
     </div>
   )
