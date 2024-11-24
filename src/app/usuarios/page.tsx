@@ -55,7 +55,9 @@ export default function UserList() {
       >
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         <main className="flex flex-col items-center h-full p-8">
-          <h1 className="text-3xl font-bold mb-6 text-center">Lista de Usuários</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">
+            Lista de Usuários
+          </h1>
           <div className="overflow-x-auto w-full max-w-4xl">
             <table className="min-w-full bg-white border border-gray-300">
               <thead>
@@ -79,14 +81,22 @@ export default function UserList() {
                 {users.map((user) => (
                   <tr key={user.id_user}>
                     <td className="py-2 px-4 border-b">{`${user.first_name} ${user.last_name}`}</td>
-                    <td className="py-2 px-4 border-b">{formatCpf(user.cpf)}</td>
+                    <td className="py-2 px-4 border-b">
+                      {formatCpf(user.cpf)}
+                    </td>
                     <td className="py-2 px-4 border-b">{user.email}</td>
-                    <td className="py-2 px-4 border-b">{formatPhone(user.phone)}</td>
-                    <td className="py-2 px-4 border-b">{getRoleLabel(user.role)}</td>
+                    <td className="py-2 px-4 border-b">
+                      {formatPhone(user.phone)}
+                    </td>
+                    <td className="py-2 px-4 border-b">
+                      {getRoleLabel(user.role)}
+                    </td>
                     <td className="py-2 px-4 border-b text-center">
                       <div className="flex justify-center items-center space-x-4">
                         <span
-                          onClick={() => router.push(`/usuarios/${user.id_user}`)}
+                          onClick={() =>
+                            router.push(`/usuarios/${user.id_user}`)
+                          }
                           className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
                           title="Editar"
                         >

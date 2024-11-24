@@ -3,7 +3,7 @@ import React, { FormEvent, ReactNode } from 'react'
 interface CustomModalProps {
   isOpen: boolean
   onClose: () => void
-  onConfirm: (e: FormEvent) => Promise<void>; 
+  onConfirm: (e: FormEvent) => Promise<void>
   title: string
   children: ReactNode
   type: 'read' | 'register' | 'update' | 'delete' | 'payment'

@@ -15,7 +15,9 @@ export default function Modalidades() {
   const [modalities, setModalities] = useState<Modality[]>([])
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false)
-  const [selectedModality, setSelectedModality] = useState<Modality | null>(null)
+  const [selectedModality, setSelectedModality] = useState<Modality | null>(
+    null
+  )
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
   const [instructors, setInstructors] = useState<Instructor[]>([])
   const [newModality, setNewModality] = useState<Modality>({
@@ -66,7 +68,11 @@ export default function Modalidades() {
     if (selectedModality) {
       try {
         await api.delete('/api/secure/admin/modality')
-        setModalities(modalities.filter((modality) => modality.id_modality !== selectedModality.id_modality))
+        setModalities(
+          modalities.filter(
+            (modality) => modality.id_modality !== selectedModality.id_modality
+          )
+        )
         closeDeleteModal()
         toast.success('Modalidade deletada com sucesso!')
       } catch (error) {
@@ -88,7 +94,6 @@ export default function Modalidades() {
 
     fetchModalities()
   }, [])
-
 
   const createModality = useCallback(
     async (e: React.FormEvent) => {
@@ -129,9 +134,13 @@ export default function Modalidades() {
             active: true,
           }) // Resetar os campos do formulário
           // Atualizar a lista de modalidades
-          setModalities(modalities.map((modality) =>
-            modality.id_modality === selectedModality.id_modality ? { ...modality, ...newModality } : modality
-          ))
+          setModalities(
+            modalities.map((modality) =>
+              modality.id_modality === selectedModality.id_modality
+                ? { ...modality, ...newModality }
+                : modality
+            )
+          )
         } catch (error) {
           console.error(error)
           toast.error('Erro ao atualizar modalidade.')
@@ -156,9 +165,15 @@ export default function Modalidades() {
             <table className="min-w-full bg-white border border-gray-300 rounded-lg">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">Descrição</th>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">Instrutor</th>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">Máximo de Participantes</th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                    Descrição
+                  </th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                    Instrutor
+                  </th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                    Máximo de Participantes
+                  </th>
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(true)}
@@ -173,14 +188,26 @@ export default function Modalidades() {
                 {modalities.length > 0 ? (
                   modalities.map((modality) => {
                     // Encontre o nome do instrutor usando o id_instructor
-                    const instructor = instructors.find(instructor => instructor.id_instructor === modality.id_instructor);
+                    const instructor = instructors.find(
+                      (instructor) =>
+                        instructor.id_instructor === modality.id_instructor
+                    )
                     return (
-                      <tr key={modality.id_modality} className="hover:bg-gray-50 transition-colors">
-                        <td className="py-3 px-4 border-b text-center text-gray-700">{modality.description}</td>
+                      <tr
+                        key={modality.id_modality}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
                         <td className="py-3 px-4 border-b text-center text-gray-700">
-                          {instructor ? instructor.name : 'Instrutor não encontrado'}
+                          {modality.description}
                         </td>
-                        <td className="py-3 px-4 border-b text-center text-gray-700">{modality.max_participants}</td>
+                        <td className="py-3 px-4 border-b text-center text-gray-700">
+                          {instructor
+                            ? instructor.name
+                            : 'Instrutor não encontrado'}
+                        </td>
+                        <td className="py-3 px-4 border-b text-center text-gray-700">
+                          {modality.max_participants}
+                        </td>
                         <td className="py-3 px-4 border-b text-center">
                           <div className="flex justify-center space-x-4">
                             <span
@@ -200,17 +227,19 @@ export default function Modalidades() {
                           </div>
                         </td>
                       </tr>
-                    );
+                    )
                   })
                 ) : (
                   <tr>
-                    <td colSpan={5} className="py-4 px-4 text-center text-gray-500">
+                    <td
+                      colSpan={5}
+                      className="py-4 px-4 text-center text-gray-500"
+                    >
                       Nenhuma modalidade encontrada.
                     </td>
                   </tr>
                 )}
               </tbody>
-
             </table>
           </div>
         </main>
@@ -224,7 +253,8 @@ export default function Modalidades() {
           type="delete"
         >
           <p className="text-gray-600">
-            Tem certeza que deseja excluir a modalidade <strong>{selectedModality?.description}</strong>?
+            Tem certeza que deseja excluir a modalidade{' '}
+            <strong>{selectedModality?.description}</strong>?
           </p>
         </CustomModal>
 
@@ -232,51 +262,76 @@ export default function Modalidades() {
         <CustomModal
           isOpen={showCreateModal}
           onClose={() => setShowCreateModal(false)}
-          onConfirm={(e:FormEvent) =>createModality(e)}
+          onConfirm={(e: FormEvent) => createModality(e)}
           title="Cadastrar Modalidade"
           type="register"
         >
           <form className="space-y-4" onSubmit={createModality}>
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Descrição
               </label>
               <input
                 type="text"
                 id="description"
-                onChange={(e) => setNewModality({ ...newModality, description: e.target.value })}
+                onChange={(e) =>
+                  setNewModality({
+                    ...newModality,
+                    description: e.target.value,
+                  })
+                }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
             </div>
             <div>
-              <label htmlFor="instructor" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="instructor"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Instrutor
               </label>
               <select
                 id="modality"
                 onChange={(e) =>
-                  setNewModality({ ...newModality, id_instructor: parseInt(e.target.value, 10) || 0 })
+                  setNewModality({
+                    ...newModality,
+                    id_instructor: parseInt(e.target.value, 10) || 0,
+                  })
                 }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               >
                 <option value="">Selecione uma Instrutor</option>
                 {instructors.map((instructor) => (
-                  <option key={instructor.id_instructor} value={instructor.id_instructor}>
+                  <option
+                    key={instructor.id_instructor}
+                    value={instructor.id_instructor}
+                  >
                     {instructor.name}
                   </option>
                 ))}
               </select>
             </div>
             <div>
-              <label htmlFor="max_participants" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="max_participants"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Máximo de Participantes
               </label>
               <input
                 type="number"
                 id="max_participants"
-                onChange={(e) => setNewModality({ ...newModality, max_participants: parseInt(e.target.value, 10) || 0 })}
+                onChange={(e) =>
+                  setNewModality({
+                    ...newModality,
+                    max_participants: parseInt(e.target.value, 10) || 0,
+                  })
+                }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
@@ -297,7 +352,12 @@ export default function Modalidades() {
               <input
                 type="text"
                 value={newModality.description}
-                onChange={(e) => setNewModality({ ...newModality, description: e.target.value })}
+                onChange={(e) =>
+                  setNewModality({
+                    ...newModality,
+                    description: e.target.value,
+                  })
+                }
                 className="px-4 py-2 border rounded-lg"
               />
             </div>
@@ -307,7 +367,12 @@ export default function Modalidades() {
               <input
                 type="number"
                 value={newModality.max_participants}
-                onChange={(e) => setNewModality({ ...newModality, max_participants: Number(e.target.value) })}
+                onChange={(e) =>
+                  setNewModality({
+                    ...newModality,
+                    max_participants: Number(e.target.value),
+                  })
+                }
                 className="px-4 py-2 border rounded-lg"
               />
             </div>
@@ -316,14 +381,22 @@ export default function Modalidades() {
               <label className="text-gray-700">Instrutor</label>
               <select
                 value={newModality.id_instructor}
-                onChange={(e) => setNewModality({ ...newModality, id_instructor: Number(e.target.value) })}
+                onChange={(e) =>
+                  setNewModality({
+                    ...newModality,
+                    id_instructor: Number(e.target.value),
+                  })
+                }
                 className="px-4 py-2 border rounded-lg"
               >
                 <option value={0} disabled>
                   Selecione um instrutor
                 </option>
                 {instructors.map((instructor) => (
-                  <option key={instructor.id_instructor} value={instructor.id_instructor}>
+                  <option
+                    key={instructor.id_instructor}
+                    value={instructor.id_instructor}
+                  >
                     {instructor.name}
                   </option>
                 ))}

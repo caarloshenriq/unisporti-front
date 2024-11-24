@@ -23,7 +23,7 @@ export default function Modalidades() {
     price_cents: 0,
     duration_days: 0,
     id_modality: 0,
-    active: true
+    active: true,
   })
 
   const toggleSidebar = () => {
@@ -71,7 +71,11 @@ export default function Modalidades() {
       try {
         console.log(selectedPlan)
         await api.put(`/api/secure/admin/plan`, selectedPlan)
-        setPlans(plans.map((plan) => (plan.id_plan === selectedPlan.id_plan ? newPlan : plan)))
+        setPlans(
+          plans.map((plan) =>
+            plan.id_plan === selectedPlan.id_plan ? newPlan : plan
+          )
+        )
         closeEditModal()
         toast.success('Plano editado com sucesso!')
       } catch (error) {
@@ -106,7 +110,6 @@ export default function Modalidades() {
     fetchModality()
   }, [])
 
-
   const createPlan = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
@@ -135,9 +138,15 @@ export default function Modalidades() {
             <table className="min-w-full bg-white border border-gray-300 rounded-lg">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">Nome</th>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">Valor</th>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">Duração</th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                    Nome
+                  </th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                    Valor
+                  </th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                    Duração
+                  </th>
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(!showCreateModal)}
@@ -151,15 +160,22 @@ export default function Modalidades() {
               <tbody>
                 {plans.length > 0 ? (
                   plans.map((plan) => (
-                    <tr key={plan.id_plan} className="hover:bg-gray-50 transition-colors">
-                      <td className="py-3 px-4 border-b text-center text-gray-700">{plan.name}</td>
+                    <tr
+                      key={plan.id_plan}
+                      className="hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="py-3 px-4 border-b text-center text-gray-700">
+                        {plan.name}
+                      </td>
                       <td className="py-3 px-4 border-b text-center text-gray-700">
                         {(plan.price_cents / 100).toLocaleString('pt-BR', {
                           style: 'currency',
                           currency: 'BRL',
                         })}
                       </td>
-                      <td className="py-3 px-4 border-b text-center text-gray-700">{plan.duration_days} dias</td>
+                      <td className="py-3 px-4 border-b text-center text-gray-700">
+                        {plan.duration_days} dias
+                      </td>
                       <td className="py-3 px-4 border-b text-center">
                         <div className="flex justify-center space-x-4">
                           <span
@@ -182,7 +198,10 @@ export default function Modalidades() {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan={4} className="py-4 px-4 text-center text-gray-500">
+                    <td
+                      colSpan={4}
+                      className="py-4 px-4 text-center text-gray-500"
+                    >
                       Nenhum plano encontrado.
                     </td>
                   </tr>
@@ -216,60 +235,84 @@ export default function Modalidades() {
         >
           <form className="space-y-4" onSubmit={createPlan}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nome
               </label>
               <input
                 type="text"
                 id="name"
                 value={newPlan.name}
-                onChange={(e) => setNewPlan({ ...newPlan, name: e.target.value })}
+                onChange={(e) =>
+                  setNewPlan({ ...newPlan, name: e.target.value })
+                }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
             </div>
             <div>
-              <label htmlFor="modality" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="modality"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Modalidade
               </label>
               <select
                 id="modality"
                 onChange={(e) =>
-                  setNewPlan({ ...newPlan, id_modality: parseInt(e.target.value, 10) || 0 })
+                  setNewPlan({
+                    ...newPlan,
+                    id_modality: parseInt(e.target.value, 10) || 0,
+                  })
                 }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               >
                 <option value="">Selecione uma Modalidade</option>
                 {modalities.map((modality) => (
-                  <option key={modality.id_modality} value={modality.id_modality}>
+                  <option
+                    key={modality.id_modality}
+                    value={modality.id_modality}
+                  >
                     {modality.description}
                   </option>
                 ))}
               </select>
             </div>
             <div>
-              <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="price"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Preço
               </label>
               <input
                 type="text"
                 id="price"
-                value={newPlan.price_cents ? formatCurrency(newPlan.price_cents.toString()) : ''}
+                value={
+                  newPlan.price_cents
+                    ? formatCurrency(newPlan.price_cents.toString())
+                    : ''
+                }
                 onChange={(e) => {
-                    const value = e.target.value;
-                    const rawValue = value.replace(/\D/g, ''); // Remove caracteres não numéricos
-                    setNewPlan({
+                  const value = e.target.value
+                  const rawValue = value.replace(/\D/g, '') // Remove caracteres não numéricos
+                  setNewPlan({
                     ...newPlan,
                     price_cents: parseInt(rawValue, 10) || 0, // Atualiza o valor com o número sem formatação
-                    });
+                  })
                 }}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                />
+              />
             </div>
             <div>
-              <label htmlFor="duration" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="duration"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Duração (em dias)
               </label>
               <input
@@ -277,7 +320,10 @@ export default function Modalidades() {
                 id="duration"
                 value={newPlan.duration_days}
                 onChange={(e) =>
-                  setNewPlan({ ...newPlan, duration_days: parseInt(e.target.value, 10) || 0 })
+                  setNewPlan({
+                    ...newPlan,
+                    duration_days: parseInt(e.target.value, 10) || 0,
+                  })
                 }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
@@ -296,61 +342,85 @@ export default function Modalidades() {
         >
           <form className="space-y-4" onSubmit={editPlan}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nome
               </label>
               <input
                 type="text"
                 id="name"
                 value={newPlan.name}
-                onChange={(e) => setNewPlan({ ...newPlan, name: e.target.value })}
+                onChange={(e) =>
+                  setNewPlan({ ...newPlan, name: e.target.value })
+                }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               />
             </div>
             <div>
-              <label htmlFor="modality" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="modality"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Modalidade
               </label>
               <select
                 id="modality"
                 value={newPlan.id_modality}
                 onChange={(e) =>
-                  setNewPlan({ ...newPlan, id_modality: parseInt(e.target.value, 10) || 0 })
+                  setNewPlan({
+                    ...newPlan,
+                    id_modality: parseInt(e.target.value, 10) || 0,
+                  })
                 }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               >
                 <option value="">Selecione uma Modalidade</option>
                 {modalities.map((modality) => (
-                  <option key={modality.id_modality} value={modality.id_modality}>
+                  <option
+                    key={modality.id_modality}
+                    value={modality.id_modality}
+                  >
                     {modality.description}
                   </option>
                 ))}
               </select>
             </div>
             <div>
-              <label htmlFor="price" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="price"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Preço
               </label>
               <input
                 type="text"
                 id="price"
-                value={newPlan.price_cents ? formatCurrency(newPlan.price_cents.toString()) : ''}
+                value={
+                  newPlan.price_cents
+                    ? formatCurrency(newPlan.price_cents.toString())
+                    : ''
+                }
                 onChange={(e) => {
-                    const value = e.target.value;
-                    const rawValue = value.replace(/\D/g, '');
-                    setNewPlan({
+                  const value = e.target.value
+                  const rawValue = value.replace(/\D/g, '')
+                  setNewPlan({
                     ...newPlan,
                     price_cents: parseInt(rawValue, 10) || 0,
-                    });
+                  })
                 }}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                />
+              />
             </div>
             <div>
-              <label htmlFor="duration" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="duration"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Duração (em dias)
               </label>
               <input
@@ -358,7 +428,10 @@ export default function Modalidades() {
                 id="duration"
                 value={newPlan.duration_days}
                 onChange={(e) =>
-                  setNewPlan({ ...newPlan, duration_days: parseInt(e.target.value, 10) || 0 })
+                  setNewPlan({
+                    ...newPlan,
+                    duration_days: parseInt(e.target.value, 10) || 0,
+                  })
                 }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"

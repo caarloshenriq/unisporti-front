@@ -26,14 +26,16 @@ export default function NewUser() {
   const [instructorInfo, setInstructorInfo] = useState({
     education_institution: '',
     degree_name: '', // Mudou de degreeName para degree_name
-    start_date: '' // Mudou de startDate para start_date
+    start_date: '', // Mudou de startDate para start_date
   })
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target
     if (name === 'birth_date') {
       setUser((prevUser) => ({
@@ -58,23 +60,23 @@ export default function NewUser() {
     async (e: React.FormEvent) => {
       e.preventDefault()
       try {
-        const cleanCpf = user.cpf.replace(/\D/g, '') 
-        const cleanPhone = user.phone.replace(/\D/g, '') 
-  
-        const userData = { 
+        const cleanCpf = user.cpf.replace(/\D/g, '')
+        const cleanPhone = user.phone.replace(/\D/g, '')
+
+        const userData = {
           ...user,
-          cpf: cleanCpf, 
+          cpf: cleanCpf,
           phone: cleanPhone,
           password: cleanCpf,
-          birthDate: user.birth_date
+          birthDate: user.birth_date,
         }
         const res = await api.post(`/api/secure/admin/user`, userData)
         console.log(res.data)
-        if(user.role === 'I') {
+        if (user.role === 'I') {
           const instructorData = {
             ...instructorInfo,
             id_user: res.data.id_user,
-            active: true
+            active: true,
           }
           await api.post(`/api/secure/admin/instructor`, instructorData)
         }
@@ -97,7 +99,9 @@ export default function NewUser() {
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         <main className="flex justify-center items-center h-full p-4 sm:p-8">
           <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 sm:p-8">
-            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Novo Usuário</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+              Novo Usuário
+            </h1>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -138,12 +142,15 @@ export default function NewUser() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700">Data de Nascimento</label>
+                  <label className="block text-gray-700">
+                    Data de Nascimento
+                  </label>
                   <input
                     type="date"
                     name="birth_date"
                     value={
-                      user.birth_date instanceof Date && !isNaN(user.birth_date.getTime())
+                      user.birth_date instanceof Date &&
+                      !isNaN(user.birth_date.getTime())
                         ? user.birth_date.toISOString().split('T')[0]
                         : ''
                     }
@@ -195,11 +202,13 @@ export default function NewUser() {
                   </select>
                 </div>
               </div>
-              
+
               {user.role === 'I' && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-gray-700">Instituição de Ensino</label>
+                    <label className="block text-gray-700">
+                      Instituição de Ensino
+                    </label>
                     <input
                       type="text"
                       name="education_institution" // Corrigido para education_institution
@@ -221,7 +230,9 @@ export default function NewUser() {
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700">Data de Início</label>
+                    <label className="block text-gray-700">
+                      Data de Início
+                    </label>
                     <input
                       type="date"
                       name="start_date" // Mudou de startDate para start_date

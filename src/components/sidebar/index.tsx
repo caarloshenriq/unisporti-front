@@ -2,14 +2,16 @@ import { FC } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import { routes } from './Routes'
 import { jwtDecode } from 'jwt-decode'
-import {JwtPayload} from '@/types/Jwt'
+import { JwtPayload } from '@/types/Jwt'
 interface SidebarProps {
   isOpen: boolean
   toggleSidebar: () => void
 }
 
 const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
-  const userPermissions: JwtPayload = jwtDecode(localStorage.getItem('token') || '');
+  const userPermissions: JwtPayload = jwtDecode(
+    localStorage.getItem('token') || ''
+  )
   return (
     <div
       className={`fixed top-0 left-0 h-full bg-uniporraGreen3 text-white w-64 transform ${

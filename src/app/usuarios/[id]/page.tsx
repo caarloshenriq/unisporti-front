@@ -27,7 +27,7 @@ export default function EditUser() {
   const [instructorInfo, setInstructorInfo] = useState({
     institution: '',
     degree_name: '',
-    start_date: ''
+    start_date: '',
   })
 
   useEffect(() => {
@@ -51,7 +51,9 @@ export default function EditUser() {
     setSidebarOpen((prev) => !prev)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target
     if (name === 'birth_date') {
       setUser((prevUser) => ({
@@ -83,7 +85,7 @@ export default function EditUser() {
           ...user,
           cpf: cleanCpf,
           phone: cleanPhone,
-          birthDate: user.birth_date
+          birthDate: user.birth_date,
         }
 
         await api.put(`/api/secure/admin/user`, userData)
@@ -107,7 +109,9 @@ export default function EditUser() {
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         <main className="flex justify-center items-center h-full p-4 sm:p-8">
           <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 sm:p-8">
-            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Editar Usuário</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+              Editar Usuário
+            </h1>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -148,12 +152,15 @@ export default function EditUser() {
                   />
                 </div>
                 <div>
-                  <label className="block text-gray-700">Data de Nascimento</label>
+                  <label className="block text-gray-700">
+                    Data de Nascimento
+                  </label>
                   <input
                     type="date"
                     name="birth_date"
                     value={
-                      user.birth_date instanceof Date && !isNaN(user.birth_date.getTime())
+                      user.birth_date instanceof Date &&
+                      !isNaN(user.birth_date.getTime())
                         ? user.birth_date.toISOString().split('T')[0]
                         : ''
                     }

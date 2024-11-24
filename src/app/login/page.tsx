@@ -12,26 +12,29 @@ export default function Login() {
 
   // Função para aplicar a máscara de CPF
   const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
-    setCpf(value);
+    let value = e.target.value.replace(/\D/g, '') // Remove todos os caracteres não numéricos
+    value = value.replace(/(\d{3})(\d)/, '$1.$2')
+    value = value.replace(/(\d{3})(\d)/, '$1.$2')
+    value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+    setCpf(value)
   }
 
   // Função para remover a máscara de CPF ao enviar
   const removeCpfMask = (value: string) => {
-    return value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
+    return value.replace(/\D/g, '') // Remove todos os caracteres não numéricos
   }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const cpfWithoutMask = removeCpfMask(cpf); // CPF sem máscara
-    console.log({ cpf: cpfWithoutMask, password });
-    const response = await api.post('api/auth/login', { cpf: cpfWithoutMask, password });
-    toast.success('Login realizado com sucesso!');
-    router.push('/dashboard');
-    localStorage.setItem('token', response.data.token);
+    e.preventDefault()
+    const cpfWithoutMask = removeCpfMask(cpf) // CPF sem máscara
+    console.log({ cpf: cpfWithoutMask, password })
+    const response = await api.post('api/auth/login', {
+      cpf: cpfWithoutMask,
+      password,
+    })
+    toast.success('Login realizado com sucesso!')
+    router.push('/dashboard')
+    localStorage.setItem('token', response.data.token)
   }
 
   return (

@@ -1,19 +1,18 @@
-import { Inter } from 'next/font/google';
-import './globals.css';
-import { Toaster } from 'react-hot-toast';
+import { Inter } from 'next/font/google'
+import './globals.css'
+import { Toaster } from 'react-hot-toast'
 // import { AuthProvider } from '@/contexts/AuthContext';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Unisporti',
   description: 'baooo',
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-
   return (
     <html lang="en">
       <link rel="icon" href="/master-revestimentos.png" />
@@ -22,5 +21,5 @@ export default function RootLayout({
         <Toaster position="top-right" />
       </body>
     </html>
-  );
+  )
 }

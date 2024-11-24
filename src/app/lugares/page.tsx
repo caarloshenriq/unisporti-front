@@ -59,7 +59,7 @@ export default function NewPlace() {
       try {
         await api.post(`/api/secure/admin/place`, place)
         toast.success('Lugar criado com sucesso!')
-        setShowCreateModal(false)  // Fechar o modal após criação
+        setShowCreateModal(false) // Fechar o modal após criação
       } catch (error) {
         console.error(error)
       }
@@ -69,7 +69,7 @@ export default function NewPlace() {
 
   const openEditModal = (place: Place) => {
     setSelectedPlace(place)
-    setPlace(place) 
+    setPlace(place)
     setShowEditModal(true)
   }
 
@@ -204,7 +204,10 @@ export default function NewPlace() {
         >
           <form className="space-y-4" onSubmit={createPlace}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nome
               </label>
               <input
@@ -216,14 +219,20 @@ export default function NewPlace() {
               />
             </div>
             <div>
-              <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="capacity"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Capacidade Máxima
               </label>
               <input
                 type="number"
                 id="capacity"
                 onChange={(e) =>
-                  setPlace({ ...place, max_capacity: parseInt(e.target.value, 10) || 0 })
+                  setPlace({
+                    ...place,
+                    max_capacity: parseInt(e.target.value, 10) || 0,
+                  })
                 }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
@@ -242,7 +251,10 @@ export default function NewPlace() {
         >
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Nome
               </label>
               <input
@@ -255,7 +267,10 @@ export default function NewPlace() {
               />
             </div>
             <div>
-              <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="capacity"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Capacidade Máxima
               </label>
               <input
@@ -263,7 +278,10 @@ export default function NewPlace() {
                 id="capacity"
                 value={place.max_capacity}
                 onChange={(e) =>
-                  setPlace({ ...place, max_capacity: parseInt(e.target.value, 10) || 0 })
+                  setPlace({
+                    ...place,
+                    max_capacity: parseInt(e.target.value, 10) || 0,
+                  })
                 }
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
