@@ -8,14 +8,14 @@ import CustomModal from '@/components/CustomModal';
 import { UserPlan } from '@/types/UserPlan';
 import { api } from '@/services/ApiClient';
 import toast from 'react-hot-toast';
+import { QRCodeSVG } from 'qrcode.react';
 
 export default function UserModality() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
-  const [selectedUserPlan, setSelectedUserPlan] = useState<UserPlan | null>(null)
   const [selectModality, setSelectModality] = useState<number | undefined>(0)
+  const [planValue, setPlanValue] = useState<number | undefined>(0)
+  const [paymentModal, setPaymentModal] = useState<boolean>(false)
   const [newUserPlan, setNewUserPlan] = useState<UserPlan>(
     {
       id_plan: 0,
@@ -38,39 +38,26 @@ export default function UserModality() {
     async (e: React.FormEvent) => {
       e.preventDefault()
       try {
-        await api.post(`/api/secure/admin/user-plan`, newUserPlan)
+        const res = await api.post(`/api/secure/admin/user-plan`, newUserPlan)
         toast.success('Aluno matriculado com sucesso!')
         setShowCreateModal(false)
+        setPaymentModal(true)
+        await new Promise(resolve => setTimeout(resolve, 10000))
+        const paymentBody = {
+          id_plan: res.data.id_plan,
+          value: planValue
+        }
+        await api.post(`/api/secure/admin/financial-movement`, paymentBody)
+        toast.success('Pagamento efetuado com sucesso!')
+        setPaymentModal(false)
       } catch (error) {
         console.error(error)
+        toast.error('O aluno ja esta inscrito no plano selecionado')
       }
     },
     [newUserPlan]
   )
 
-  const updateEnroll = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault()
-      try {
-        await api.put(`/api/secure/admin/user-plan`, newUserPlan)
-        toast.success('matricula atualizada com sucesso!')
-        setShowUpdateModal(false)
-      } catch (error) {
-        console.error(error)
-      }
-    },
-    [newUserPlan]
-  )
-
-  const openEditModal = (userPlan: UserPlan) => {
-    setSelectedUserPlan(userPlan)
-    const plan = plans.find((plan) => plan.id_plan === userPlan.id_plan);
-    const modality = modalities.find(
-      (modality) => modality.id_modality === plan?.id_modality
-    );
-    setSelectModality(modality?.id_modality)
-    setShowUpdateModal(true)
-  }
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -79,8 +66,8 @@ export default function UserModality() {
         className={`flex-1 transition-all duration-300 ease-in-out ${sidebarOpen ? 'ml-64' : 'ml-0'}`}
       >
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
-        <main className="p-8 h-full overflow-auto flex justify-center">
-          <div className="w-full max-w-5xl">
+        <main className="p-8 h-full overflow-auto">
+        <h1 className="text-3xl font-bold mb-6 text-center">Matriculas</h1>
             <table className="min-w-full bg-white border border-gray-300 rounded-lg">
               <thead>
                 <tr>
@@ -125,22 +112,7 @@ export default function UserModality() {
                           {getRoleLabel(userPlan.status)}
                         </td>
                         <td className="py-3 px-4 border-b text-center">
-                          <div className="flex justify-center space-x-4">
-                            <span
-                              onClick={() => openEditModal(userPlan)}
-                              className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
-                              title="Editar"
-                            >
-                              <FiEdit size={20} />
-                            </span>
-                            <span
-                              onClick={() => setShowDeleteModal(true)}
-                              className="cursor-pointer text-red-600 hover:text-red-700"
-                              title="Excluir"
-                            >
-                              <FiTrash size={20} />
-                            </span>
-                          </div>
+                          
                         </td>
                       </tr>
                     );
@@ -154,7 +126,6 @@ export default function UserModality() {
                 )}
               </tbody>
             </table>
-          </div>
         </main>
         <CustomModal
           isOpen={showCreateModal}
@@ -196,7 +167,7 @@ export default function UserModality() {
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
               >
-                <option value="">Selecione um Aluno</option>
+                <option value="">Selecione um Modalidade</option>
                 {modalities.map((modality) => (
                   <option key={modality.id_modality} value={modality.id_modality}>
                     {modality.description}
@@ -206,11 +177,14 @@ export default function UserModality() {
             </div>
             <div>
               <label htmlFor="price" className="block text-sm font-medium text-gray-700">Plano</label>
-                <select
+              <select
                 id="user"
-                onChange={(e) =>
-                  setNewUserPlan({ ...newUserPlan, id_plan: parseInt(e.target.value, 10) || 0 })
-                }
+                onChange={(e) => {
+                  const selectedPlanId = parseInt(e.target.value, 10) || 0;
+                  const selectedPlan = plans.find((p) => p.id_plan === selectedPlanId);
+                  setNewUserPlan({ ...newUserPlan, id_plan: selectedPlanId });
+                  setPlanValue(selectedPlan ? selectedPlan.price_cents : 0);
+                }}
                 required
                 className="mt-1 block w-full border border-gray-300 rounded-md p-2"
                 disabled={!selectModality}
@@ -225,30 +199,19 @@ export default function UserModality() {
             </div>
           </form>
         </CustomModal>
-
         <CustomModal
-        isOpen={showUpdateModal}
-        onClose={() => setShowUpdateModal(!showUpdateModal)}
-        title="Editar Matricula"
-        type="update"
-        onConfirm={updateEnroll}
+          isOpen={paymentModal}
+          onClose={() => setPaymentModal(!paymentModal)}
+          title="Pagamento"
+          type="payment"
+          onConfirm={enrollStudent}
         >
-            <div>
-              <label htmlFor="price" className="block text-sm font-medium text-gray-700">Plano</label>
-                <select
-                id="user"
-                required
-                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
-                value={selectedUserPlan?.id_plan}
-              >
-                <option value="">Selecione um plano</option>
-                {plan.map((plan) => (
-                  <option key={plan.id_plan} value={plan.id_plan}>
-                    {plan.name}
-                  </option>
-                ))}
-              </select>
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex items-center justify-center">
+              <QRCodeSVG value="https://i.ytimg.com/vi/bJpJBTFozQs/maxresdefault.jpg" />
             </div>
+            valor: R$ {planValue}
+          </div>
         </CustomModal>
       </div>
     </div>

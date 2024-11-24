@@ -15,7 +15,7 @@ export const routes: Route[] = [
   { path: '/minhas-modalidades', label: 'Nova Aula', permission: 'U' },
   {
     path: '/admin/usuario-modalidade',
-    label: 'Usuario Modalidade',
+    label: 'Matriculas',
     permission: 'A',
   },
 ]

@@ -6,7 +6,7 @@ interface CustomModalProps {
   onConfirm: (e: FormEvent) => Promise<void>; 
   title: string
   children: ReactNode
-  type: 'read' | 'register' | 'update' | 'delete'
+  type: 'read' | 'register' | 'update' | 'delete' | 'payment'
 }
 
 const CustomModal: React.FC<CustomModalProps> = ({
@@ -48,7 +48,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               Salvar
             </button>
           </div>
-        ) : type === 'delete' && (
+        ) : type === 'delete' ? (
           <div className="flex justify-end space-x-4">
             <button
               onClick={onClose}
@@ -63,7 +63,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
               Confirmar
             </button>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   )
