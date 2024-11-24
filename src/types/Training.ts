@@ -2,12 +2,12 @@ import { Modality } from './Modality'
 import { Place } from './Place'
 
 export interface Training {
-  idTraining: number
-  modality: Modality
-  place: Place
+  id_training?: number
+  id_modality: number
+  id_place: number
   description: string
-  weekDay: number
-  startTime: string
-  endTime: string
+  week_day: number
+  start_hour: number
+  end_hour: number
   active: boolean
 }

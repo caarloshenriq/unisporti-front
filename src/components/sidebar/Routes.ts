@@ -18,4 +18,9 @@ export const routes: Route[] = [
     label: 'Matriculas',
     permission: 'A',
   },
+  {
+    path: '/admin/treinamentos',
+    label: 'Treinamentos',
+    permission: 'A',
+  },
 ]
