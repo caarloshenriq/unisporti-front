@@ -41,7 +41,7 @@ export default function UserList() {
       case 'I':
         return 'Instrutor'
       case 'U':
-        return 'Usuário'
+        return 'Aluno'
       default:
         return 'Desconhecido'
     }
@@ -58,8 +58,8 @@ export default function UserList() {
           <h1 className="text-3xl font-bold mb-6 text-center">
             Lista de Usuários
           </h1>
-          <div className="overflow-x-auto w-full max-w-4xl">
-            <table className="min-w-full bg-white border border-gray-300">
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-300 rounded-lg">
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b text-left">Nome</th>

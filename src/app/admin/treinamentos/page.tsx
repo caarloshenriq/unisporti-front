@@ -52,7 +52,7 @@ export default function Treinamentos() {
     };
 
     fetchData();
-  }, [trainingData]);
+  }, []);
 
   const places = useMemo(() => placesData, [placesData]);
   const modalities = useMemo(() => modalitiesData, [modalitiesData]);
@@ -60,10 +60,10 @@ export default function Treinamentos() {
 
   const createTraining = useCallback(async () => {
     try {
-      console.log(newTraining)
       await api.post('/api/secure/admin/training', newTraining);
       toast.success('Treinamento criado com sucesso!');
       setShowCreateModal(false);
+      setSelectedTraining(undefined);
     } catch (error) {
       toast.error('Erro ao criar o treinamento!');
       console.error('Erro ao criar o treinamento:', error);
@@ -80,6 +80,14 @@ export default function Treinamentos() {
     setShowDeleteModal(false)
   }
 
+  const openUpdateModal = (training: Training) => {
+    setSelectedTraining(training)
+    setShowUpdateModal(true)
+  }
+
+  const closeUpdateModal = () => {
+    setShowUpdateModal(false)
+  }
 
   const confirmDelete = async () => {
     if (selectedTraining) {
@@ -140,6 +148,13 @@ export default function Treinamentos() {
                         <td className='py-3 px-4 border-b text-center text-gray-700'>{modality ? modality.description : 'Modalidade não encontrada'}</td>
                         <td className="py-3 px-4 border-b text-center">
                           <div className="flex justify-center space-x-4">
+                            <span
+                              onClick={() => openUpdateModal(training)}
+                              className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
+                              title="Editar"
+                            >
+                              <FiEdit size={20} />
+                            </span>
                             <span
                               onClick={() => openDeleteModal(training)}
                               className="cursor-pointer text-red-600 hover:text-red-700"
@@ -262,6 +277,112 @@ export default function Treinamentos() {
             <strong>{selectedTraining?.description}</strong>?
           </p>
         </CustomModal>
+
+        <CustomModal
+          isOpen={showUpdateModal}
+          onClose={closeUpdateModal}
+          title="Editar Treinamento"
+          onConfirm={async () => {
+            try {
+              console.log(selectedTraining)
+              await api.put(`/api/secure/admin/training`, selectedTraining);
+              toast.success('Treinamento atualizado com sucesso!');
+              closeUpdateModal();
+            } catch (error) {
+              toast.error('Erro ao atualizar o treinamento!');
+              console.error('Erro ao atualizar o treinamento:', error);
+            }
+          }}
+          type="update"
+        >
+          <form className="space-y-4">
+            <div>
+              <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descrição</label>
+              <input
+                id="description"
+                type="text"
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                value={selectedTraining?.description || ''}
+                onChange={(e) => setSelectedTraining({ ...selectedTraining, description: e.target.value } as Training)}
+              />
+            </div>
+            <div className="flex flex-row">
+              <div className="mr-2">
+                <label htmlFor="startTime" className="block text-sm font-medium text-gray-700">Horário de Início</label>
+                <input
+                  id="startTime"
+                  type="time"
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                  value={selectedTraining ? selectedTraining.start_hour.toFixed(2).replace(".", ":") : ''}
+                  onChange={(e) => {
+                    const timeString = e.target.value.replace(":", ".");
+                    setSelectedTraining({ ...selectedTraining, start_hour: parseFloat(timeString) } as Training);
+                  }}
+                />
+              </div>
+              <div>
+                <label htmlFor="endTime" className="block text-sm font-medium text-gray-700">Horário de Fim</label>
+                <input
+                  id="endTime"
+                  type="time"
+                  className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                  value={selectedTraining ? selectedTraining.end_hour.toFixed(2).replace(".", ":") : ''}
+                  onChange={(e) => {
+                    const timeString = e.target.value.replace(":", ".");
+                    setSelectedTraining({ ...selectedTraining, end_hour: parseFloat(timeString) } as Training);
+                  }}
+                />
+              </div>
+            </div>
+            <div>
+              <label htmlFor="weekday" className="block text-sm font-medium text-gray-700">Dia da Semana</label>
+              <select
+                id="weekday"
+                name="weekday"
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                value={selectedTraining?.week_day || ''}
+                onChange={(e) => setSelectedTraining({ ...selectedTraining, week_day: parseInt(e.target.value, 10) } as Training)}
+              >
+                <option value="">Selecione um dia</option>
+                <option value={1}>Segunda-feira</option>
+                <option value={2}>Terça-feira</option>
+                <option value={3}>Quarta-feira</option>
+                <option value={4}>Quinta-feira</option>
+                <option value={5}>Sexta-feira</option>
+                <option value={6}>Sábado</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="place" className="block text-sm font-medium text-gray-700">Lugar</label>
+              <select
+                id="place"
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                value={selectedTraining?.id_place || ''}
+                onChange={(e) => setSelectedTraining({ ...selectedTraining, id_place: parseInt(e.target.value, 10) } as Training)}
+              >
+                <option value="">Selecione um lugar</option>
+                {places.map((place) => (
+                  <option key={place.id_place} value={place.id_place}>{place.name}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label htmlFor="modality" className="block text-sm font-medium text-gray-700">Modalidade</label>
+              <select
+                id="modality"
+                className="mt-1 block w-full border border-gray-300 rounded-md p-2"
+                value={selectedTraining?.id_modality || ''}
+                onChange={(e) => setSelectedTraining({ ...selectedTraining, id_modality: parseInt(e.target.value, 10) } as Training)}
+              >
+                <option value="">Selecione uma modalidade</option>
+                {modalities.map((modality) => (
+                  <option key={modality.id_modality} value={modality.id_modality}>{modality.description}</option>
+                ))}
+              </select>
+            </div>
+          </form>
+        </CustomModal>
+
       </div>
     </div>
   );

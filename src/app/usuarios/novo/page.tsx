@@ -198,7 +198,7 @@ export default function NewUser() {
                     <option value="A">Administrador</option>
                     <option value="M">Gerente</option>
                     <option value="I">Instrutor</option>
-                    <option value="U">Usuário</option>
+                    <option value="U">Aluno</option>
                   </select>
                 </div>
               </div>

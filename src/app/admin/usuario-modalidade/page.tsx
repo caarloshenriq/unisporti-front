@@ -46,6 +46,9 @@ export default function UserModality() {
         }
         await api.post(`/api/secure/admin/financial-movement`, paymentBody)
         toast.success('Pagamento efetuado com sucesso!')
+        const userTraining = {
+          
+        }
         setPaymentModal(false)
       } catch (error) {
         console.error(error)
