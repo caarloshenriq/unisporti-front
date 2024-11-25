@@ -12,7 +12,7 @@ export const routes: Route[] = [
   { path: '/admin/planos', label: 'Planos', permission: 'A' },
   { path: '/usuarios', label: 'Usuarios', permission: 'A' },
   { path: '/nova-aula', label: 'Nova Aula', permission: 'I' },
-  { path: '/minhas-modalidades', label: 'Nova Aula', permission: 'U' },
+  { path: '/minhas-modalidades', label: 'Minhas modalidades', permission: 'U' },
   {
     path: '/admin/usuario-modalidade',
     label: 'Matriculas',

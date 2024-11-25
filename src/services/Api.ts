@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { AuthTokenError } from './errors/AuthTokenError'
+import { getCookie } from 'cookies-next'
 
 export function setupAPIClient() {
   const api = axios.create({
@@ -7,9 +8,8 @@ export function setupAPIClient() {
   })
 
   api.interceptors.request.use((config) => {
-    const token = process.env.NEXT_PUBLIC_TOKEN
-    if (token && config.headers) {
-      config.headers['Authorization'] = `Bearer ${token}`
+    if (config.headers) {
+      config.headers['Authorization'] = `Bearer ${getCookie('token')}`
     }
     return config
   })
