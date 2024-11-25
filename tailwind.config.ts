@@ -16,6 +16,7 @@ const config: Config = {
         uniporraGreen1: '#44c257',
         uniporraGreen2: '#73b974',
         uniporraGreen3: '#84a690',
+        uniporrabg: '#c1c1be',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

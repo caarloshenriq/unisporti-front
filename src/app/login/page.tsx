@@ -2,6 +2,7 @@ import { api } from '@/services/ApiClient'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { formatCpf } from '@/utils/Masks'
+import axios from 'axios'
 
 
 export default async function Login() {
@@ -14,7 +15,7 @@ export default async function Login() {
   if (cpf && password) {
 
     try {
-      const response = await api.post('api/auth/login', {
+      const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + 'api/auth/login', {
         cpf,
         password,
       })
@@ -36,8 +37,10 @@ export default async function Login() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-green-50">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center text-green-600">Entrar</h2>
+      <div className="w-full max-w-md bg-uniporrabg p-8 rounded-lg shadow-md">
+        <div className='flex flex-col items-center justify-center'>
+        <img src="logo.png" alt="" className='w-28 h-28 items-center' />
+        </div>
         <form action={handleLogin}>
           <div className="mb-4">
             <label htmlFor="cpf" className="block text-sm font-medium text-gray-700">
