@@ -1,6 +1,6 @@
 export type Instructor = {
   id_instructor: number // Correspondente ao id_instructor
-  id_iser: number // Correspondente ao id_user
+  id_user: number // Correspondente ao id_user
   name: string // Correspondente ao degree_name
   educational_institution: string // Correspondente ao educational_institution
   start_date: string // Correspondente ao start_date (ISO 8601 format)

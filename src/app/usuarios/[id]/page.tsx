@@ -140,18 +140,6 @@ export default function EditUser() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-700">CPF</label>
-                  <input
-                    type="text"
-                    name="cpf"
-                    value={user.cpf}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
-                    required
-                    maxLength={14}
-                  />
-                </div>
-                <div>
                   <label className="block text-gray-700">
                     Data de Nascimento
                   </label>
@@ -169,6 +157,17 @@ export default function EditUser() {
                     required
                   />
                 </div>
+                <div>
+                  <label className="block text-gray-700">Telefone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={user.phone}
+                    onChange={handleChange}
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
+                    maxLength={15}
+                  />
+                </div>
               </div>
 
               <div>
@@ -182,37 +181,6 @@ export default function EditUser() {
                   required
                 />
               </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-gray-700">Telefone</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={user.phone}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
-                    maxLength={15}
-                  />
-                </div>
-                <div>
-                  <label className="block text-gray-700">Função</label>
-                  <select
-                    name="role"
-                    value={user.role}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-green-500"
-                    required
-                  >
-                    <option value="">Selecione uma função</option>
-                    <option value="A">Administrador</option>
-                    <option value="M">Gerente</option>
-                    <option value="I">Instrutor</option>
-                    <option value="U">Aluno</option>
-                  </select>
-                </div>
-              </div>
-
               <div className="text-center">
                 <button
                   type="submit"

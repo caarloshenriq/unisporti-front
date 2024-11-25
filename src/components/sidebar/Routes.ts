@@ -1,7 +1,7 @@
 interface Route {
   path: string
   label: string
-  permission: string
+  permission: string | string[]
 }
 
 export const routes: Route[] = [
@@ -12,7 +12,11 @@ export const routes: Route[] = [
   { path: '/admin/planos', label: 'Planos', permission: 'A' },
   { path: '/usuarios', label: 'Usuarios', permission: 'A' },
   { path: '/nova-aula', label: 'Nova Aula', permission: 'I' },
-  { path: '/minhas-modalidades', label: 'Minhas modalidades', permission: 'U' },
+  {
+    path: '/minhas-modalidades',
+    label: 'Minhas modalidades',
+    permission: ['U', 'I'],
+  },
   {
     path: '/admin/usuario-modalidade',
     label: 'Matriculas',

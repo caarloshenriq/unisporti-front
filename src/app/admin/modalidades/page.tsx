@@ -150,7 +150,6 @@ export default function Modalidades() {
     [newModality, selectedModality, modalities]
   )
 
-  console.log(instructors)
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -190,7 +189,7 @@ export default function Modalidades() {
                     // Encontre o nome do instrutor usando o id_instructor
                     const instructor = instructors.find(
                       (instructor) =>
-                        instructor.id_instructor === modality.id_instructor
+                        instructor.id_instructor === (modality.id_instructor)
                     )
                     return (
                       <tr

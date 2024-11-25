@@ -34,9 +34,14 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
               Início
             </a>
           </li>
-          {routes.map(
-            ({ path, label, permission }) =>
-              userPermissions.role.includes(permission) && (
+          {routes.map(({ path, label, permission }) => {
+            const hasPermission =
+              typeof permission === 'string'
+                ? userPermissions.role.includes(permission)
+                : permission.some((perm) => userPermissions.role.includes(perm))
+
+            return (
+              hasPermission && (
                 <li key={path}>
                   <a
                     href={path}
@@ -47,7 +52,8 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
                   </a>
                 </li>
               )
-          )}
+            )
+          })}
         </ul>
       </nav>
     </div>

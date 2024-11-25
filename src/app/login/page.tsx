@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { formatCpf } from '@/utils/Masks'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 
 export default async function Login() {
@@ -13,7 +14,6 @@ export default async function Login() {
   console.log(cpf, password)
 
   if (cpf && password) {
-
     try {
       const response = await axios.post(process.env.NEXT_PUBLIC_API_URL + 'api/auth/login', {
         cpf,
