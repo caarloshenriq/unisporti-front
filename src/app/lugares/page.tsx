@@ -40,7 +40,7 @@ export default function NewPlace() {
   const confirmDelete = async () => {
     if (selectedPlace) {
       try {
-        await api.delete(`/api/secure/admin/place/${selectedPlace.id_place}`)
+        await api.delete(`/place/${selectedPlace.id_place}`)
         setPlaces(
           places.filter((place) => place.id_place !== selectedPlace.id_place)
         )
@@ -57,7 +57,7 @@ export default function NewPlace() {
     async (e: FormEvent) => {
       e.preventDefault()
       try {
-        await api.post(`/api/secure/admin/place`, place)
+        await api.post(`/place`, place)
         toast.success('Lugar criado com sucesso!')
         setShowCreateModal(false) // Fechar o modal após criação
       } catch (error) {
@@ -78,7 +78,7 @@ export default function NewPlace() {
     if (selectedPlace) {
       try {
         console.log(selectedPlace)
-        await api.put(`/api/secure/admin/place`, place)
+        await api.put(`/place`, place)
         setShowEditModal(false)
         setSelectedPlace(null)
         toast.success('Lugar atualizado com sucesso!')
@@ -92,7 +92,7 @@ export default function NewPlace() {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const response = await api.get('/api/secure/admin/place')
+        const response = await api.get('/place')
         const data = response.data
         setPlaces(data)
       } catch (error) {

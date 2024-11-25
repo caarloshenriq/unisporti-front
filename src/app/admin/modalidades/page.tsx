@@ -31,7 +31,7 @@ export default function Modalidades() {
   useEffect(() => {
     const fetchInstructors = async () => {
       try {
-        const response = await api.get('/api/secure/admin/instructor')
+        const response = await api.get('/instructor')
         setInstructors(response.data)
       } catch (error) {
         console.error('Erro ao buscar os instrutores:', error)
@@ -67,7 +67,7 @@ export default function Modalidades() {
   const confirmDelete = async () => {
     if (selectedModality) {
       try {
-        await api.delete('/api/secure/admin/modality')
+        await api.delete('/modality')
         setModalities(
           modalities.filter(
             (modality) => modality.id_modality !== selectedModality.id_modality
@@ -85,7 +85,7 @@ export default function Modalidades() {
   useEffect(() => {
     const fetchModalities = async () => {
       try {
-        const response = await api.get('/api/secure/admin/modality')
+        const response = await api.get('/modality')
         setModalities(response.data)
       } catch (error) {
         console.error('Erro ao buscar as modalidades:', error)
@@ -99,7 +99,7 @@ export default function Modalidades() {
     async (e: React.FormEvent) => {
       e.preventDefault()
       try {
-        await api.post(`/api/secure/admin/modality`, newModality)
+        await api.post(`/modality`, newModality)
         toast.success('Modalidade criada com sucesso!')
         setShowCreateModal(false)
         setNewModality({
@@ -123,7 +123,7 @@ export default function Modalidades() {
       if (selectedModality) {
         try {
           console.log(newModality)
-          await api.put(`/api/secure/admin/modality`, newModality)
+          await api.put(`/modality`, newModality)
           toast.success('Modalidade atualizada com sucesso!')
           setShowUpdateModal(false)
           setNewModality({

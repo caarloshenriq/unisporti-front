@@ -70,7 +70,7 @@ export default function NewUser() {
           password: cleanCpf,
           birthDate: user.birth_date,
         }
-        const res = await api.post(`/api/secure/admin/user`, userData)
+        const res = await api.post(`/user`, userData)
         console.log(res.data)
         if (user.role === 'I') {
           const instructorData = {
@@ -78,7 +78,7 @@ export default function NewUser() {
             id_user: res.data.id_user,
             active: true,
           }
-          await api.post(`/api/secure/admin/instructor`, instructorData)
+          await api.post(`/instructor`, instructorData)
         }
         toast.success(`Usuário criado com sucesso`)
         router.push('/usuarios')

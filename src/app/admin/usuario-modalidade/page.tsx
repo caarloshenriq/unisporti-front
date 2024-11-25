@@ -35,7 +35,7 @@ export default function UserModality() {
     async (e: React.FormEvent) => {
       e.preventDefault()
       try {
-        const res = await api.post(`/api/secure/admin/user-plan`, newUserPlan)
+        const res = await api.post(`/user-plan`, newUserPlan)
         toast.success('Aluno matriculado com sucesso!')
         setShowCreateModal(false)
         setPaymentModal(true)
@@ -44,7 +44,7 @@ export default function UserModality() {
           id_plan: res.data.id_plan,
           value: planValue,
         }
-        await api.post(`/api/secure/admin/financial-movement`, paymentBody)
+        await api.post(`/financial-movement`, paymentBody)
         toast.success('Pagamento efetuado com sucesso!')
         const userTraining = {
           

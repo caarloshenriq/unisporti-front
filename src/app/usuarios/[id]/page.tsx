@@ -33,7 +33,7 @@ export default function EditUser() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const { data } = await api.get(`/api/secure/admin/user/${id}`)
+        const { data } = await api.get(`/user/${id}`)
         setUser({
           ...data,
           birth_date: new Date(data.birth_date),
@@ -88,7 +88,7 @@ export default function EditUser() {
           birthDate: user.birth_date,
         }
 
-        await api.put(`/api/secure/admin/user`, userData)
+        await api.put(`/user`, userData)
 
         toast.success(`Usuário atualizado com sucesso`)
         router.push('/usuarios')

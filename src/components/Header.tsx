@@ -1,10 +1,11 @@
 'use client'
 
-import { jwtDecode, JwtPayload } from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import { FaBars, FaCaretDown, FaCaretUp } from 'react-icons/fa'
 import {parseCookies, destroyCookie} from 'nookies'
+import { JwtPayload } from '@/types/Jwt'
 
 interface HeaderProps {
   toggleSidebar: () => void

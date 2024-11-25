@@ -43,7 +43,7 @@ export default function Modalidades() {
   const confirmDelete = async () => {
     if (selectedPlan) {
       try {
-        await api.delete(`/api/secure/admin/plan/${selectedPlan.id_plan}`)
+        await api.delete(`/plan/${selectedPlan.id_plan}`)
         setPlans(plans.filter((plan) => plan.id_plan !== selectedPlan.id_plan))
         closeDeleteModal()
         toast.success('Plano deletado com sucesso!')
@@ -70,7 +70,7 @@ export default function Modalidades() {
     if (selectedPlan) {
       try {
         console.log(selectedPlan)
-        await api.put(`/api/secure/admin/plan`, selectedPlan)
+        await api.put(`/plan`, selectedPlan)
         setPlans(
           plans.map((plan) =>
             plan.id_plan === selectedPlan.id_plan ? newPlan : plan
@@ -87,7 +87,7 @@ export default function Modalidades() {
   useEffect(() => {
     const fetchPlans = async () => {
       try {
-        const response = await api.get('/api/secure/admin/plan')
+        const response = await api.get('/plan')
         setPlans(response.data)
       } catch (error) {
         console.error('Erro ao buscar os planos:', error)
@@ -100,7 +100,7 @@ export default function Modalidades() {
   useEffect(() => {
     const fetchModality = async () => {
       try {
-        const modalityResponse = await api.get('/api/secure/admin/modality')
+        const modalityResponse = await api.get('/modality')
         setModalities(modalityResponse.data)
       } catch (error) {
         console.error('Erro ao buscar os planos:', error)
@@ -114,7 +114,7 @@ export default function Modalidades() {
     async (e: React.FormEvent) => {
       e.preventDefault()
       try {
-        await api.post(`/api/secure/admin/plan`, newPlan)
+        await api.post(`/plan`, newPlan)
         toast.success('Plano criado com sucesso!')
         setPlans((prevPlans) => [...prevPlans, newPlan])
         setShowCreateModal(false)

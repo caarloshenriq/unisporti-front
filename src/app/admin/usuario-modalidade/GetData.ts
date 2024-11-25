@@ -15,7 +15,7 @@ export function useUserModalityData() {
   useEffect(() => {
     const fetchUserPlan = async () => {
       try {
-        const response = await api.get('/api/secure/admin/user-plan')
+        const response = await api.get('/user-plan')
         setUserPlanData(response.data)
       } catch (error) {
         console.error('Erro ao buscar os planos do usuário:', error)
@@ -28,7 +28,7 @@ export function useUserModalityData() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get('/api/secure/admin/user')
+        const response = await api.get('/user')
         setUsersData(response.data)
       } catch (error) {
         console.error('Erro ao buscar os usuários:', error)
@@ -41,7 +41,7 @@ export function useUserModalityData() {
   useEffect(() => {
     const fetchPlan = async () => {
       try {
-        const response = await api.get('/api/secure/admin/plan')
+        const response = await api.get('/plan')
         setPlanData(response.data)
       } catch (error) {
         console.error('Erro ao buscar os planos:', error)
@@ -54,7 +54,7 @@ export function useUserModalityData() {
   useEffect(() => {
     const fetchModality = async () => {
       try {
-        const response = await api.get('/api/secure/admin/modality')
+        const response = await api.get('/modality')
         setModalityData(response.data)
       } catch (error) {
         console.error('Erro ao buscar as modalidades:', error)

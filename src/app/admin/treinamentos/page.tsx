@@ -38,13 +38,13 @@ export default function Treinamentos() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const placeResponse = await api.get('/api/secure/admin/place');
+        const placeResponse = await api.get('/place');
         setPlacesData(placeResponse.data);
 
-        const modalityResponse = await api.get('/api/secure/admin/modality');
+        const modalityResponse = await api.get('/modality');
         setModalitiesData(modalityResponse.data);
 
-        const trainingResponse = await api.get('/api/secure/admin/training');
+        const trainingResponse = await api.get('/training');
         setTrainingData(trainingResponse.data);
       } catch (error) {
         console.error('Erro ao buscar os dados:', error);
@@ -60,7 +60,7 @@ export default function Treinamentos() {
 
   const createTraining = useCallback(async () => {
     try {
-      await api.post('/api/secure/admin/training', newTraining);
+      await api.post('/training', newTraining);
       toast.success('Treinamento criado com sucesso!');
       setShowCreateModal(false);
       setSelectedTraining(undefined);
@@ -92,7 +92,7 @@ export default function Treinamentos() {
   const confirmDelete = async () => {
     if (selectedTraining) {
       try {
-        await api.delete(`/api/secure/admin/training/${selectedTraining.id_training}`)
+        await api.delete(`/training/${selectedTraining.id_training}`)
         closeDeleteModal()
         toast.success('Treino deletada com sucesso!')
       } catch (error) {
@@ -285,7 +285,7 @@ export default function Treinamentos() {
           onConfirm={async () => {
             try {
               console.log(selectedTraining)
-              await api.put(`/api/secure/admin/training`, selectedTraining);
+              await api.put(`/training`, selectedTraining);
               toast.success('Treinamento atualizado com sucesso!');
               closeUpdateModal();
             } catch (error) {

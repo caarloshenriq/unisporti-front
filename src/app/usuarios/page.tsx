@@ -22,7 +22,7 @@ export default function UserList() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await api.get(`/api/secure/admin/user`)
+        const response = await api.get(`/user`)
         setUsers(response.data)
       } catch (error) {
         console.error(error)
