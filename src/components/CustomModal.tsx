@@ -28,7 +28,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <div className="flex justify-end">
             <button
               onClick={onClose}
-              className="text-gray-500 text-sm absolute bottom-4 right-4 hover:text-gray-700"
+              className="bg-uniporraGreen3 text-uniporraBlack text-sm absolute bottom-4 right-4 hover:bg-gray-300 transition-colors"
             >
               Fechar
             </button>
@@ -37,13 +37,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <div className="flex justify-end space-x-4">
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition-colors"
+              className="px-4 py-2 bg-uniporraGray text-uniporraBlack rounded-md hover:bg-gray-300 transition-colors"
             >
               Cancelar
             </button>
             <button
               onClick={onConfirm}
-              className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+              className="px-4 py-2 bg-uniporra2 text-uniporraBlack rounded-md hover:bg-uniporraGray transition-colors"
             >
               Salvar
             </button>
@@ -52,7 +52,7 @@ const CustomModal: React.FC<CustomModalProps> = ({
           <div className="flex justify-end space-x-4">
             <button
               onClick={onClose}
-              className="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 transition-colors"
+              className="px-4 py-2 bg-uniporraGray text-uniporraBlack rounded-md hover:bg-gray-300 transition-colors"
             >
               Cancelar
             </button>

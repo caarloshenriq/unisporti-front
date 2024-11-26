@@ -66,23 +66,23 @@ export default function UserModality() {
       >
         <Header toggleSidebar={toggleSidebar} sidebarOpen={sidebarOpen} />
         <main className="p-8 h-full overflow-auto">
-          <h1 className="text-3xl font-bold mb-6 text-center">Matriculas</h1>
+          <h1 className="text-uniporraBlack text-3xl font-bold mb-6 text-center">Matriculas</h1>
           <table className="min-w-full bg-white border border-gray-300 rounded-lg">
             <thead>
               <tr>
-                <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">
                   Aluno
                 </th>
-                <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">
                   Plano
                 </th>
-                <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">
                   Modalidade
                 </th>
-                <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">
                   Data de Início
                 </th>
-                <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">
                   Status
                 </th>
                 <th className="py-2 px-4 border-b text-center">

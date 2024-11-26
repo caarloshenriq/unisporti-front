@@ -13,7 +13,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
   const userPermissions: JwtPayload = jwtDecode(parseCookies().token)
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-uniporraGreen3 text-white w-64 transform ${
+      className={`fixed top-0 left-0 h-full bg-uniporraGreen1 text-white w-64 transform ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } transition-transform duration-100 ease-in-out`}
     >
@@ -25,7 +25,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
       </button>
       <nav className="mt-16">
         <ul className="flex flex-col space-y-4 px-4">
-          <li>
+          <li className="font-bold">
             <a
               href="/dashboard"
               className="block py-2 px-4 border-b border-white relative overflow-hidden"
@@ -42,7 +42,7 @@ const Sidebar: FC<SidebarProps> = ({ isOpen, toggleSidebar }) => {
 
             return (
               hasPermission && (
-                <li key={path}>
+                <li key={path} className="font-bold">
                   <a
                     href={path}
                     className="block py-2 px-4 border-b border-white relative overflow-hidden"
