@@ -116,16 +116,16 @@ export default function NewPlace() {
             <table className="min-w-full bg-white border border-gray-300 rounded-lg">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                  <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">
                     Nome
                   </th>
-                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                  <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">
                     Capacidade Máxima
                   </th>
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(!showCreateModal)}
-                      className="bg-uniporraGreen3 text-white px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
+                      className="bg-uniporra2 text-bg-uniporraBlack px-4 py-2 rounded-lg hover:bg-uniporraGray transition-colors"
                     >
                       Novo
                     </button>
@@ -139,10 +139,10 @@ export default function NewPlace() {
                       key={place.id_place}
                       className="hover:bg-gray-50 transition-colors"
                     >
-                      <td className="py-3 px-4 border-b text-center text-gray-700">
+                      <td className="py-3 px-4 border-b text-center text-uniporraBlack">
                         {place.name}
                       </td>
-                      <td className="py-3 px-4 border-b text-center text-gray-700">
+                      <td className="py-3 px-4 border-b text-center text-uniporraBlack">
                         {place.max_capacity}
                       </td>
                       <td className="py-3 px-4 border-b text-center">
@@ -206,7 +206,7 @@ export default function NewPlace() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-uniporraBlack"
               >
                 Nome
               </label>
@@ -221,7 +221,7 @@ export default function NewPlace() {
             <div>
               <label
                 htmlFor="capacity"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-uniporraBlack"
               >
                 Capacidade Máxima
               </label>
@@ -253,7 +253,7 @@ export default function NewPlace() {
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-uniporraBlack"
               >
                 Nome
               </label>
@@ -269,7 +269,7 @@ export default function NewPlace() {
             <div>
               <label
                 htmlFor="capacity"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-uniporraBlack"
               >
                 Capacidade Máxima
               </label>

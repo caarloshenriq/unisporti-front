@@ -10,8 +10,8 @@ export const routes: Route[] = [
   // { path: '/enquetes', label: 'Enquetes', permission: 'admin' },
   { path: '/admin/modalidades', label: 'Modalidades', permission: 'A' },
   { path: '/admin/planos', label: 'Planos', permission: 'A' },
-  { path: '/usuarios', label: 'Usuarios', permission: 'A' },
-  { path: '/nova-aula', label: 'Nova Aula', permission: 'I' },
+  { path: '/usuarios', label: 'Usuários', permission: 'A' },
+  { path: '/nova-aula', label: 'Novo treinamento', permission: 'I' },
   {
     path: '/minhas-modalidades',
     label: 'Minhas modalidades',
@@ -19,7 +19,7 @@ export const routes: Route[] = [
   },
   {
     path: '/admin/usuario-modalidade',
-    label: 'Matriculas',
+    label: 'Matrículas',
     permission: 'A',
   },
   {

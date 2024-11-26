@@ -22,7 +22,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
   const decoded: JwtPayload = jwtDecode(parseCookies().token)
 
   return (
-    <header className="bg-uniporraGreen3 text-white py-4 flex items-center justify-between px-4 relative">
+    <header className="bg-uniporraGreen1 text-white py-4 flex items-center justify-between px-4 relative">
       <button onClick={toggleSidebar} className="text-white focus:outline-none">
         {!sidebarOpen && <FaBars className="w-6 h-6 ml-4" />}
       </button>
@@ -32,10 +32,10 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
       >
         Unisporti
       </h1>
-      <div className="relative">
+      <div className="relative bg-uniporra2 rounded-md">
         <button
           onClick={handleDropdownToggle}
-          className="flex items-center text-white px-4 py-2 rounded-lg focus:outline-none transition-colors duration-300"
+          className="flex items-center text-uniporraBlack px-4 py-2 rounded-lg focus:outline-none transition-colors duration-300"
         >
           {decoded.sub}
           <div className={`ml-2 transition-transform duration-300 ease-in-out`}>
@@ -43,7 +43,7 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
           </div>
         </button>
         {dropdownOpen && (
-          <div className="absolute right-0 mt-2 bg-white text-uniporraGreen3 rounded-lg shadow-lg w-48 hover:bg-green-50">
+          <div className="absolute right-0 mt-2 bg-white text-uniporraBlack rounded-lg shadow-lg w-48 hover:bg-green-50">
             <button
               onClick={() => {
                 destroyCookie(null, 'token')

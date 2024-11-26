@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         uniporra: '#69f152',
-        uniporra2: '#e8eed7',
+        uniporra2: '#EEE82C',
         uniporraBlack: '#1c3631',
-        uniporraGray: '#c2c3bb',
-        uniporraGreen1: '#44c257',
-        uniporraGreen2: '#73b974',
+        uniporraGray: '#A9ACA9',
+        uniporraGreen1: '#1E7F4D',
+        uniporraGreen2: '#1F271B',
         uniporraGreen3: '#84a690',
         uniporrabg: '#c1c1be',
       },

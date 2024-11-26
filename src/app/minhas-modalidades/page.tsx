@@ -6,7 +6,6 @@ import { Instructor } from '@/types/Instructor'
 import { JwtPayload } from '@/types/Jwt'
 import { Modality } from '@/types/Modality'
 import { jwtDecode } from 'jwt-decode'
-import Link from 'next/link'
 import { parseCookies } from 'nookies'
 import { useEffect, useState } from 'react'
 
