@@ -176,7 +176,7 @@ export default function Modalidades() {
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(true)}
-                      className="bg-uniporraGreen3 text-white px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
+                      className="bg-uniporra2 px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
                     >
                       Novo
                     </button>

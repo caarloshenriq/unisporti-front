@@ -70,7 +70,7 @@ export default function UserList() {
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => router.push('/usuarios/novo')}
-                      className="bg-uniporraGreen3 text-white px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
+                      className="bg-uniporra2 px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
                     >
                       Novo
                     </button>

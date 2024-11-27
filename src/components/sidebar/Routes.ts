@@ -7,11 +7,9 @@ interface Route {
 export const routes: Route[] = [
   { path: '/financeiro', label: 'Financeiro', permission: 'U' },
   { path: '/lugares', label: 'Lugares', permission: 'A' },
-  // { path: '/enquetes', label: 'Enquetes', permission: 'admin' },
   { path: '/admin/modalidades', label: 'Modalidades', permission: 'A' },
   { path: '/admin/planos', label: 'Planos', permission: 'A' },
   { path: '/usuarios', label: 'Usuários', permission: 'A' },
-  { path: '/nova-aula', label: 'Novo treinamento', permission: 'I' },
   {
     path: '/minhas-modalidades',
     label: 'Minhas modalidades',
@@ -26,5 +24,10 @@ export const routes: Route[] = [
     path: '/admin/treinamentos',
     label: 'Treinamentos',
     permission: 'A',
+  },
+  {
+    path: '/instrutor/alunos',
+    label: 'Alunos',
+    permission: 'I',
   },
 ]

@@ -122,7 +122,7 @@ export default function Treinamentos() {
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(true)}
-                      className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-400 transition-colors"
+                      className="bg-uniporra2 px-4 py-2 rounded-lg hover:bg-green-400 transition-colors"
                     >
                       Novo
                     </button>

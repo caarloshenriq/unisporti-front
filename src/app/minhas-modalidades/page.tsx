@@ -10,6 +10,7 @@ import { jwtDecode } from 'jwt-decode'
 import { parseCookies } from 'nookies'
 import { useEffect, useState } from 'react'
 import { getWeekdayLabel } from '../admin/treinamentos/Training'
+import Link from 'next/link'
 
 export default function Modalidades() {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
@@ -37,6 +38,7 @@ export default function Modalidades() {
       }
       fetchModalities()
     }, [])
+
     const idInstrucotr = instructors.find((instructor) => instructor.id_user == decoded.idUser)?.id_instructor
     myModalities = modalities.filter((modality) => idInstrucotr && modality.id_instructor == idInstrucotr)
   } else {
@@ -67,15 +69,19 @@ export default function Modalidades() {
             <div className="grid gap-10 md:grid-cols-3">
               {myModalities.map(
                 (modality) => (
-                  <div
+                  <Link
                     key={modality.id_modality}
-                    className="bg-white shadow-lg rounded-lg p-8 transition-transform transform hover:scale-105 items-center hover:cursor-pointer"
+                    href={`/minhas-modalidades/${modality.id_modality}`}
+                    passHref
                   >
-                    <h4 className="text-2xl font-bold mb-4 text-uniporra">
-                      {modality.description}
-                    </h4>
-                    <p className="text-uniporraBlack">Adicionar dia e hr treino</p>
-                  </div>
+                    <div
+                      className="bg-white shadow-lg rounded-lg p-8 transition-transform transform hover:scale-105 items-center hover:cursor-pointer"
+                    >
+                      <h4 className="text-2xl font-bold mb-4 text-uniporraBlack text-center">
+                        {modality.description}
+                      </h4>
+                    </div>
+                  </Link>
                 )
               )}
             </div>
@@ -90,7 +96,7 @@ export default function Modalidades() {
                       className="bg-white shadow-lg rounded-lg p-8 transition-transform transform hover:scale-105 items-center hover:cursor-pointer"
                     >
                       <a>
-                        <h4 className="text-2xl font-bold mb-4 text-uniporra text-center">
+                        <h4 className="text-2xl font-bold mb-4 text-uniporraBlack text-center">
                           {modality?.description}
                         </h4>
                         <p className="text-uniporraBlack text-center">
