@@ -41,7 +41,7 @@ export default function UserModality() {
         setPaymentModal(true)
         await new Promise((resolve) => setTimeout(resolve, 10000))
         const paymentBody = {
-          id_plan: res.data.id_plan,
+          id_user_plan: res.data.id_user_plan,
           value: planValue,
         }
         await api.post(`/financial-movement`, paymentBody)
