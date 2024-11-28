@@ -101,7 +101,7 @@ export default function NewPlace() {
     }
 
     fetchPlaces()
-  }, [places])
+  }, [])
 
   return (
     <div className="flex h-screen overflow-hidden">

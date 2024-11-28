@@ -95,7 +95,7 @@ export default function Modalidades() {
     }
 
     fetchPlans()
-  }, [plans])
+  }, [])
 
   useEffect(() => {
     const fetchModality = async () => {

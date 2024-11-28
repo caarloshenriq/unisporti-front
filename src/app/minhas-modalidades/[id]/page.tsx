@@ -29,8 +29,8 @@ export default function Treinamentos() {
       }
     }
     fetchTraining()
-  }, [id]) // Adiciona id como dependência para reatividade
-console.log(trainings)
+  }, [id])
+  
   return (
     <div className="flex h-screen">
       <Sidebar isOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
