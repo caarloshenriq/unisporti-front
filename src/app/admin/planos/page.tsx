@@ -69,8 +69,12 @@ export default function Modalidades() {
     e.preventDefault()
     if (selectedPlan) {
       try {
-        console.log(selectedPlan)
-        await api.put(`/plan`, selectedPlan)
+        await api.put(`/plan`, newPlan)
+        setNewPlan({name: '',
+          price_cents: 0,
+          duration_days: 0,
+          id_modality: 0,
+          active: true,})
         setPlans(
           plans.map((plan) =>
             plan.id_plan === selectedPlan.id_plan ? newPlan : plan
@@ -147,6 +151,9 @@ export default function Modalidades() {
                   <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
                     Duração
                   </th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-gray-700">
+                    Modalidade
+                  </th>
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(!showCreateModal)}
@@ -158,50 +165,56 @@ export default function Modalidades() {
                 </tr>
               </thead>
               <tbody>
-                {plans.length > 0 ? (
-                  plans.map((plan) => (
-                    <tr
-                      key={plan.id_plan}
-                      className="hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="py-3 px-4 border-b text-center text-gray-700">
-                        {plan.name}
-                      </td>
-                      <td className="py-3 px-4 border-b text-center text-gray-700">
-                        {(plan.price_cents / 100).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
-                      </td>
-                      <td className="py-3 px-4 border-b text-center text-gray-700">
-                        {plan.duration_days} dias
-                      </td>
-                      <td className="py-3 px-4 border-b text-center">
-                        <div className="flex justify-center space-x-4">
-                          <span
-                            onClick={() => openEditModal(plan)}
-                            className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
-                            title="Editar"
-                          >
-                            <FiEdit size={20} />
-                          </span>
-                          <span
-                            onClick={() => openDeleteModal(plan)}
-                            className="cursor-pointer text-red-600 hover:text-red-700"
-                            title="Excluir"
-                          >
-                            <FiTrash size={20} />
-                          </span>
-                        </div>
-                      </td>
-                    </tr>
-                  ))
+              {plans.length > 0 ? (
+                    plans.map((plan) => {
+                    const modality = modalities.find(
+                      (modality) => modality.id_modality === plan.id_modality
+                    );
+
+                    return (
+                      <tr
+                        key={plan.id_plan}
+                        className="hover:bg-gray-50 transition-colors"
+                      >
+                        <td className="py-3 px-4 border-b text-center text-gray-700">
+                          {plan.name}
+                        </td>
+                        <td className="py-3 px-4 border-b text-center text-gray-700">
+                          {plan.price_cents.toLocaleString('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                          })}
+                        </td>
+                        <td className="py-3 px-4 border-b text-center text-gray-700">
+                          {plan.duration_days} dias
+                        </td>
+                        <td className="py-3 px-4 border-b text-center text-gray-700">
+                          {modality ? modality.description : 'Modalidade não encontrada'}
+                        </td>
+                        <td className="py-3 px-4 border-b text-center">
+                          <div className="flex justify-center space-x-4">
+                            <span
+                              onClick={() => openEditModal(plan)}
+                              className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
+                              title="Editar"
+                            >
+                              <FiEdit size={20} />
+                            </span>
+                            <span
+                              onClick={() => openDeleteModal(plan)}
+                              className="cursor-pointer text-red-600 hover:text-red-700"
+                              title="Excluir"
+                            >
+                              <FiTrash size={20} />
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
                 ) : (
                   <tr>
-                    <td
-                      colSpan={4}
-                      className="py-4 px-4 text-center text-gray-500"
-                    >
+                    <td colSpan={5} className="text-center text-gray-700 py-4">
                       Nenhum plano encontrado.
                     </td>
                   </tr>
@@ -293,7 +306,7 @@ export default function Modalidades() {
                 id="price"
                 value={
                   newPlan.price_cents
-                    ? formatCurrency(newPlan.price_cents.toString())
+                    ? newPlan.price_cents
                     : ''
                 }
                 onChange={(e) => {
@@ -401,7 +414,7 @@ export default function Modalidades() {
                 id="price"
                 value={
                   newPlan.price_cents
-                    ? formatCurrency(newPlan.price_cents.toString())
+                    ? newPlan.price_cents
                     : ''
                 }
                 onChange={(e) => {

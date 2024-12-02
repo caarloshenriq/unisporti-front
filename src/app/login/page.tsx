@@ -1,9 +1,6 @@
-import { api } from '@/services/ApiClient'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { formatCpf } from '@/utils/Masks'
 import axios from 'axios'
-import toast from 'react-hot-toast'
 
 
 export default async function Login() {

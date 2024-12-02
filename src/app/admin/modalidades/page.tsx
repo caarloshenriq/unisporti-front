@@ -120,7 +120,7 @@ export default function Modalidades() {
   const updateModality = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault()
-      if (selectedModality) {
+      console.log("sem if")
         try {
           console.log(newModality)
           await api.put(`/modality`, newModality)
@@ -132,20 +132,11 @@ export default function Modalidades() {
             description: '',
             max_participants: 0,
             active: true,
-          }) // Resetar os campos do formulário
-          // Atualizar a lista de modalidades
-          setModalities(
-            modalities.map((modality) =>
-              modality.id_modality === selectedModality.id_modality
-                ? { ...modality, ...newModality }
-                : modality
-            )
-          )
+          })
         } catch (error) {
           console.error(error)
           toast.error('Erro ao atualizar modalidade.')
         }
-      }
     },
     [newModality, selectedModality, modalities]
   )
