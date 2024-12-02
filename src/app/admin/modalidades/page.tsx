@@ -39,7 +39,7 @@ export default function Modalidades() {
     }
 
     fetchInstructors()
-  })
+  },[])
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev)
@@ -138,7 +138,7 @@ export default function Modalidades() {
           toast.error('Erro ao atualizar modalidade.')
         }
     },
-    [newModality, selectedModality, modalities]
+    []
   )
 
 
@@ -167,7 +167,7 @@ export default function Modalidades() {
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(true)}
-                      className="bg-uniporra2 px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
+                      className="bg-uniporraGreen1 px-4 py-2 rounded-lg hover:bg-slate-500 transition-colors text-white"
                     >
                       Novo
                     </button>

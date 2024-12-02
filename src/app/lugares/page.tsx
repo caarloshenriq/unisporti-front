@@ -125,7 +125,7 @@ export default function NewPlace() {
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => setShowCreateModal(!showCreateModal)}
-                      className="bg-uniporra2 text-bg-uniporraBlack px-4 py-2 rounded-lg hover:bg-uniporraGray transition-colors"
+                      className="bg-uniporraGreen1 px-4 py-2 rounded-lg hover:bg-slate-500 transition-colors text-white"
                     >
                       Novo
                     </button>

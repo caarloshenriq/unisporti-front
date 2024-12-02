@@ -30,7 +30,7 @@ export default function UserList() {
       }
     }
     fetchUsers()
-  }, [users])
+  }, [])
 
   function getRoleLabel(role: string) {
     switch (role) {
@@ -58,19 +58,19 @@ export default function UserList() {
           <h1 className="text-3xl font-bold mb-6 text-center">
             Lista de Usuários
           </h1>
-          <div className="overflow-x-auto">
+          <div className="w-full overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-300 rounded-lg">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border-b text-left">Nome</th>
-                  <th className="py-2 px-4 border-b text-left">CPF</th>
-                  <th className="py-2 px-4 border-b text-left">Email</th>
-                  <th className="py-2 px-4 border-b text-left">Telefone</th>
-                  <th className="py-2 px-4 border-b text-left">Função</th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">Nome</th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">CPF</th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">Email</th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">Telefone</th>
+                  <th className="py-2 px-4 border-b text-center font-semibold text-uniporraBlack">Função</th>
                   <th className="py-2 px-4 border-b text-center">
                     <button
                       onClick={() => router.push('/usuarios/novo')}
-                      className="bg-uniporra2 px-4 py-2 rounded-lg hover:bg-uniporraGreen2 transition-colors"
+                      className="bg-uniporraGreen1 px-4 py-2 rounded-lg hover:bg-slate-500 transition-colors text-white"
                     >
                       Novo
                     </button>
@@ -78,34 +78,34 @@ export default function UserList() {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id_user}>
-                    <td className="py-2 px-4 border-b">{`${user.first_name} ${user.last_name}`}</td>
-                    <td className="py-2 px-4 border-b">
-                      {formatCpf(user.cpf)}
-                    </td>
-                    <td className="py-2 px-4 border-b">{user.email}</td>
-                    <td className="py-2 px-4 border-b">
-                      {formatPhone(user.phone)}
-                    </td>
-                    <td className="py-2 px-4 border-b">
-                      {getRoleLabel(user.role)}
-                    </td>
-                    <td className="py-2 px-4 border-b text-center">
-                      <div className="flex justify-center items-center space-x-4">
-                        <span
-                          onClick={() =>
-                            router.push(`/usuarios/${user.id_user}`)
-                          }
-                          className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
-                          title="Editar"
-                        >
-                          <FiEdit size={20} />
-                        </span>
-                      </div>
+                {users.length > 0 ? (
+                  users.map((user) => (
+                    <tr key={user.id_user} className="hover:bg-gray-50 transition-colors">
+                      <td className="py-3 px-4 border-b text-center">{`${user.first_name} ${user.last_name}`}</td>
+                      <td className="py-3 px-4 border-b text-center">{formatCpf(user.cpf)}</td>
+                      <td className="py-3 px-4 border-b text-center">{user.email}</td>
+                      <td className="py-3 px-4 border-b text-center">{formatPhone(user.phone)}</td>
+                      <td className="py-3 px-4 border-b text-center">{getRoleLabel(user.role)}</td>
+                      <td className="py-3 px-4 border-b text-center">
+                        <div className="flex justify-center items-center space-x-4">
+                          <span
+                            onClick={() => router.push(`/usuarios/${user.id_user}`)}
+                            className="cursor-pointer text-uniporraGreen1 hover:text-uniporraGreen2"
+                            title="Editar"
+                          >
+                            <FiEdit size={20} />
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={6} className="py-4 px-4 text-center text-gray-500">
+                      Nenhum usuário encontrado.
                     </td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>

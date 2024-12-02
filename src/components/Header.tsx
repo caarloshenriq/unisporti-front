@@ -32,10 +32,10 @@ const Header: FC<HeaderProps> = ({ toggleSidebar, sidebarOpen }) => {
       >
         Unisporti
       </h1>
-      <div className="relative bg-uniporra2 rounded-md">
+      <div className="relative bg-white rounded-md">
         <button
           onClick={handleDropdownToggle}
-          className="flex items-center text-uniporraBlack px-4 py-2 rounded-lg focus:outline-none transition-colors duration-300"
+          className="flex items-center text-uniporraBlack px-4 py-2 rounded-lg focus:outline-none transition-colors duration-300 font-bold"
         >
           {decoded.sub}
           <div className={`ml-2 transition-transform duration-300 ease-in-out`}>

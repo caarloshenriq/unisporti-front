@@ -30,4 +30,9 @@ export const routes: Route[] = [
     label: 'Alunos',
     permission: 'I',
   },
+  {
+    path: '/admin/enquetes',
+    label: 'Enquetes',
+    permission: 'A',
+  },
 ]

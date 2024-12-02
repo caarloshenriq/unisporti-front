@@ -29,7 +29,7 @@ export default function Treinamentos() {
       }
     }
     fetchTraining()
-  }, [id])
+  }, [])
   
   return (
     <div className="flex h-screen">
