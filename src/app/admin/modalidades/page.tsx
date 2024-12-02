@@ -67,7 +67,7 @@ export default function Modalidades() {
   const confirmDelete = async () => {
     if (selectedModality) {
       try {
-        await api.delete('/modality')
+        await api.delete(`/modality/${selectedModality.id_modality}`)
         setModalities(
           modalities.filter(
             (modality) => modality.id_modality !== selectedModality.id_modality
